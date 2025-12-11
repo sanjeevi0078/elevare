@@ -114,9 +114,9 @@ sendgrid>=6.11.0  # Email service
 mcp>=1.0.0  # Official MCP server library
 
 # ==========================================
-# MACHINE LEARNING (Optional - for enhanced matching)
+# MACHINE LEARNING (for Hybrid Semantic Matching Engine)
 # ==========================================
-# sentence-transformers>=2.3.0  # Semantic embeddings
-# scikit-learn>=1.4.0  # ML utilities
-# numpy>=1.26.0
+sentence-transformers>=2.3.0  # Semantic embeddings with all-MiniLM-L6-v2
+scikit-learn>=1.4.0  # Cosine similarity, ML utilities
+numpy>=1.26.0  # Numerical computing
 
