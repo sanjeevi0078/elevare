@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elevare - Welcome Back</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/login-luxury.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body class="overflow-x-hidden">
+    <!-- Floating particles -->
+    <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
+    <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
+    <div class="particle" style="left: 40%; animation-delay: 6s;"></div>
+    <div class="particle" style="left: 50%; animation-delay: 8s;"></div>
+    <div class="particle" style="left: 60%; animation-delay: 10s;"></div>
+    <div class="particle" style="left: 70%; animation-delay: 12s;"></div>
+    <div class="particle" style="left: 80%; animation-delay: 14s;"></div>
+    <div class="particle" style="left: 90%; animation-delay: 16s;"></div>
+    
+    <!-- Floating orbs -->
+    <div class="floating-orb orb-1"></div>
+    <div class="floating-orb orb-2"></div>
+    <div class="floating-orb orb-3"></div>
+
+    <header class="fixed w-full top-0 left-0 z-50 glass-morphism">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="/" class="text-4xl font-bold animated-gradient-text">Elevare</a>
+            <div class="flex items-center space-x-4">
+                <a href="/" class="text-purple-300 hover:text-purple-200 transition-colors font-medium">← Back to Home</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="h-screen flex items-center justify-center px-4 pt-16 pb-4">
+        <div class="w-full max-w-md">
+            <!-- Welcome Header -->
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-400/30 rounded-full px-4 py-2 mb-6 animate-float">
+                    <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span class="text-sm font-medium text-purple-200">Secure Portal</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 animated-gradient-text-hero">
+                    WELCOME BACK
+                </h1>
+                <p class="text-gray-400 text-lg">Continue your journey</p>
+            </div>
+
+            <!-- Login Card -->
+            <div class="glass-morphism-enhanced rounded-3xl p-8 relative overflow-hidden">
+                <!-- Decorative top border -->
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500"></div>
+                
+                <!-- Social Login Options -->
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <button class="social-login-luxury">
+                        <i class="fab fa-google text-red-400"></i>
+                        <span>Google</span>
+                    </button>
+                    <button class="social-login-luxury">
+                        <i class="fab fa-github text-gray-300"></i>
+                        <span>GitHub</span>
+                    </button>
+                </div>
+                
+                <!-- Divider -->
+                <div class="relative mb-6">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-600"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-4 bg-black/40 text-gray-400">or email</span>
+                    </div>
+                </div>
+
+                <!-- Login Form -->
+                <form class="space-y-6">
+                    <div class="login-input-group">
+                        <div class="login-input-container">
+                            <i class="fas fa-envelope login-input-icon"></i>
+                            <input type="email" class="login-input-luxury" placeholder="Email address" required />
+                            <div class="login-input-glow"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="login-input-group">
+                        <div class="login-input-container">
+                            <i class="fas fa-lock login-input-icon"></i>
+                            <input type="password" class="login-input-luxury" placeholder="Password" required />
+                            <div class="login-input-glow"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Remember & Forgot -->
+                    <div class="flex items-center justify-between text-sm">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 rounded bg-transparent border-2 border-purple-400 text-purple-500 focus:ring-purple-500">
+                            <span class="text-gray-400">Remember</span>
+                        </label>
+                        <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">Forgot?</a>
+                    </div>
+                    
+                    <!-- Login Button -->
+                    <a href="/profile-setup" class="login-btn-luxury w-full">
+                        <div class="login-btn-content">
+                            <i class="fas fa-rocket login-btn-icon"></i>
+                            <span class="login-btn-text">Launch Dashboard</span>
+                        </div>
+                        <div class="login-btn-glow"></div>
+                    </a>
+                </form>
+                
+                <!-- Guest Access -->
+                <div class="mt-6 text-center">
+                    <a href="/profile-setup" class="guest-btn-luxury">
+                        <i class="fas fa-user-astronaut text-blue-400 mr-2"></i>
+                        <span>Explore as Guest</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // GSAP animations
+        gsap.from(".glass-morphism-enhanced", {
+            duration: 1.2,
+            y: 60,
+            opacity: 0,
+            ease: "power3.out",
+            delay: 0.3
+        });
+
+        gsap.from(".social-login-luxury", {
+            duration: 0.8,
+            scale: 0.8,
+            opacity: 0,
+            stagger: 0.1,
+            delay: 0.8,
+            ease: "back.out(1.7)"
+        });
+
+        gsap.from(".login-input-group", {
+            duration: 0.6,
+            y: 30,
+            opacity: 0,
+            stagger: 0.1,
+            delay: 1,
+            ease: "power2.out"
+        });
+
+        // Floating animations
+        gsap.to(".floating-orb", {
+            y: "random(-20, 20)",
+            x: "random(-20, 20)",
+            duration: "random(3, 6)",
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true,
+            stagger: 0.5
+        });
+    </script>
+</body>
+</html>

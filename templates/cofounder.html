@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elevare - Cofounder Compatibility</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/cofounder.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body class="overflow-x-hidden cofounder-body">
+
+    <!-- Floating Particles Background -->
+    <div id="cofounder-particles" class="fixed inset-0 pointer-events-none z-0"></div>
+    
+    <!-- Animated Background Orbs -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="cofounder-orb orb-1"></div>
+        <div class="cofounder-orb orb-2"></div>
+        <div class="cofounder-orb orb-3"></div>
+        <div class="cofounder-orb orb-4"></div>
+    </div>
+
+    <header class="fixed w-full top-0 left-0 z-50 glass-morphism-enhanced backdrop-blur-xl">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="/" class="text-4xl font-black animated-gradient-text-enhanced hover-magnetic" data-magnetic>Elevare</a>
+            <div class="flex items-center space-x-6">
+                <a href="/user" class="text-purple-300 hover:text-purple-200 transition-colors font-medium">← Dashboard</a>
+                <div class="hidden md:flex items-center gap-3 cursor-pointer" id="cf-header-user" onclick="window.location.href='/profile'">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold" id="cf-header-initials">--</div>
+                    <div class="text-sm">
+                        <div class="text-white font-semibold" id="cf-header-name">Guest</div>
+                        <div class="text-purple-300 text-xs" id="cf-header-sub">Click for profile</div>
+                    </div>
+                </div>
+                <button onclick="logout()" class="text-gray-400 hover:text-red-400 transition-colors" title="Logout">
+                    <i class="fas fa-sign-out-alt text-xl"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="pt-24 relative z-10">
+        <!-- Hero Section -->
+        <section class="py-16 px-4">
+            <div class="container mx-auto">
+                <div class="text-center mb-16">
+                    <div class="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500/20 to-rose-500/20 border border-pink-400/30 rounded-full px-6 py-3 mb-8 animate-float">
+                        <div class="w-3 h-3 bg-pink-400 rounded-full animate-pulse"></div>
+                        <span class="text-sm font-medium text-pink-200">� Cofounder Compatibility Engine</span>
+                    </div>
+                    <h1 class="text-6xl md:text-7xl font-black mb-6">
+                        <span class="holographic-text-pro">COFOUNDER</span>
+                        <span class="block text-4xl md:text-5xl text-pink-200 font-light mt-2">COMPATIBILITY</span>
+                    </h1>
+                    <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                        Real profile data (skills, interest, commitment) is used to surface potentially compatible cofounders. No fabricated metrics—every count reflects live data.
+                    </p>
+                </div>
+
+                <!-- Idea Selector -->
+                <div class="max-w-4xl mx-auto mb-12 glass-morphism-enhanced rounded-3xl p-8">
+                    <label class="block text-lg font-semibold mb-4 text-pink-200">
+                        <i class="fas fa-lightbulb mr-2"></i>Select Your Idea
+                    </label>
+                    <select id="idea-selector" class="w-full p-4 bg-black/60 border-2 border-pink-500/50 rounded-xl text-white text-lg cursor-pointer hover:border-pink-400/70 transition-all">
+                        <option value="">Loading your ideas...</option>
+                    </select>
+                    <p class="mt-3 text-sm text-gray-400">
+                        💡 Choose an idea to find cofounders who match its requirements
+                    </p>
+                </div>
+
+                <!-- Matching Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-2 gap-6 mb-16">
+                    <div class="match-stat-card">
+                        <div class="text-4xl mb-3">👥</div>
+                        <div class="text-3xl font-bold text-pink-300" id="compat-count">0</div>
+                        <div class="text-sm text-gray-400">Profiles Loaded</div>
+                    </div>
+                    <div class="match-stat-card">
+                        <div class="text-4xl mb-3">💕</div>
+                        <div class="text-3xl font-bold text-rose-300" id="high-matches">0</div>
+                        <div class="text-sm text-gray-400">High Compatibility</div>
+                    </div>
+                </div>
+
+                <!-- Scroll indicator -->
+                <div class="text-center mb-8 animate-bounce">
+                    <div class="text-4xl">👇</div>
+                    <p class="text-sm text-purple-400 font-medium">Scroll down to find your matches!</p>
+                </div>
+
+                <!-- Main Content Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-12" style="min-height: 600px;">
+                    <!-- Perfect Matches Section -->
+                    <div class="lg:col-span-2" style="background: rgba(139, 92, 246, 0.1); border: 2px solid rgba(139, 92, 246, 0.3); border-radius: 1rem; padding: 2rem; width: 100%;">
+                        <div style="margin-bottom: 2rem;">
+                            <h2 style="color: #a78bfa; font-size: 1.875rem; font-weight: 900; margin-bottom: 1.5rem;">
+                                � Find Compatible Cofounders
+                            </h2>
+                            
+                            <!-- Auto-Matching Status -->
+                            <div id="cf-auto-match-status" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%); border: 2px solid rgba(139, 92, 246, 0.4); border-radius: 0.75rem; padding: 1.5rem; margin-bottom: 1.5rem;">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <div style="font-size: 2.5rem; animation: pulse 2s ease-in-out infinite;">🤖</div>
+                                    <div style="flex: 1;">
+                                        <h3 style="color: #c084fc; font-size: 1.125rem; font-weight: 700; margin-bottom: 0.5rem;">AI Headhunter Ready</h3>
+                                        <p style="color: #9ca3af; font-size: 0.875rem;" id="cf-status-text">
+                                            Click "Start Matching" to find the best cofounders for your refined idea
+                                        </p>
+                                    </div>
+                                </div>
+                                <!-- Start Matching Button -->
+                                <button id="cf-start-matching-btn" onclick="window.manualStartMatching()" style="width: 100%; padding: 1rem; background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%); color: white; font-weight: 700; font-size: 1.125rem; border: none; border-radius: 0.75rem; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4); display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                    <span>🚀</span>
+                                    <span>Start Matching</span>
+                                </button>
+                            </div>
+                            
+                            <!-- Filter Tabs -->
+                            <div style="display: block; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(139, 92, 246, 0.2);">
+                                <p style="color: #9ca3af; font-size: 0.875rem; margin-bottom: 0.75rem;">Filter by expertise:</p>
+                                <button class="match-tab active" data-filter="all" style="padding: 0.5rem 1rem; background: rgba(139, 92, 246, 0.3); border-radius: 0.5rem; color: white; cursor: pointer; border: 1px solid rgba(139, 92, 246, 0.5); margin-right: 0.5rem;">All</button>
+                                <button class="match-tab" data-filter="technical" style="padding: 0.5rem 1rem; background: rgba(139, 92, 246, 0.1); border-radius: 0.5rem; color: #a78bfa; cursor: pointer; border: 1px solid rgba(139, 92, 246, 0.3); margin-right: 0.5rem;">Tech</button>
+                                <button class="match-tab" data-filter="business" style="padding: 0.5rem 1rem; background: rgba(139, 92, 246, 0.1); border-radius: 0.5rem; color: #a78bfa; cursor: pointer; border: 1px solid rgba(139, 92, 246, 0.3); margin-right: 0.5rem;">Business</button>
+                                <button class="match-tab" data-filter="design" style="padding: 0.5rem 1rem; background: rgba(139, 92, 246, 0.1); border-radius: 0.5rem; color: #a78bfa; cursor: pointer; border: 1px solid rgba(139, 92, 246, 0.3);">Design</button>
+                            </div>
+                        </div>
+
+                        <!-- Match Cards (dynamic only) -->
+                        <div id="cf-matches-section" style="display: block; width: 100%;">
+                            <!-- Initial Instructions -->
+                            <div id="cf-instructions" style="text-align: center; padding: 4rem 2rem; border: 2px dashed rgba(139, 92, 246, 0.3); border-radius: 1rem; background: rgba(139, 92, 246, 0.05);">
+                                <div style="font-size: 3.75rem; margin-bottom: 1rem;">🤝</div>
+                                <h3 style="font-size: 1.5rem; font-weight: 700; color: #d8b4fe; margin-bottom: 0.75rem;">Ready to Find Your Cofounder?</h3>
+                                <p style="color: #9ca3af; margin-bottom: 0.5rem;">1️⃣ Select your profile from the dropdown above</p>
+                                <p style="color: #9ca3af; margin-bottom: 1.5rem;">2️⃣ Click "Find Matches" to discover compatible cofounders</p>
+                                <p style="font-size: 0.875rem; color: #c084fc;">Real matching based on skills, interests, commitment level, and compatibility</p>
+                            </div>
+                            <div id="cf-matches-dynamic" class="space-y-6"></div>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar -->
+                    <div class="space-y-8" style="background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 1rem; padding: 1.5rem; height: fit-content;">
+                        <!-- Selected Profile Summary (real data) -->
+                        <div class="cofounder-card-pro">
+                            <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
+                                🧬 <span class="animated-gradient-text">Your Profile</span>
+                            </h3>
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold" id="cf-initials">--</div>
+                                <div>
+                                    <div class="font-semibold text-white" id="cf-name">No profile selected</div>
+                                    <div class="text-sm text-gray-400" id="cf-sub">Select your profile above or create one</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Match Preferences -->
+                        <div class="cofounder-card-pro">
+                            <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
+                                🎯 <span class="animated-gradient-text">Match Preferences</span>
+                            </h3>
+                            
+                            <div class="preference-item">
+                                <label class="preference-label">Looking for:</label>
+                                <select class="preference-select">
+                                    <option>Technical Cofounder</option>
+                                    <option>Business Cofounder</option>
+                                    <option>Design Cofounder</option>
+                                    <option>Any Role</option>
+                                </select>
+                            </div>
+
+                            <div class="preference-item">
+                                <label class="preference-label">Industry Focus:</label>
+                                <div class="preference-tags">
+                                    <span class="preference-tag">EdTech</span>
+                                    <span class="preference-tag">FinTech</span>
+                                    <span class="preference-tag">HealthTech</span>
+                                    <span class="preference-tag">AI/ML</span>
+                                </div>
+                            </div>
+
+                            <div class="preference-item">
+                                <label class="preference-label">Location:</label>
+                                <select class="preference-select">
+                                    <option>San Francisco Bay Area</option>
+                                    <option>New York City</option>
+                                    <option>Los Angeles</option>
+                                    <option>Remote</option>
+                                </select>
+                            </div>
+
+                            <div class="preference-item">
+                                <label class="preference-label">Experience Level:</label>
+                                <div class="preference-range">
+                                    <input type="range" min="0" max="20" value="5" class="range-slider">
+                                    <div class="range-labels">
+                                        <span>0 years</span>
+                                        <span>20+ years</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Success Stories placeholder intentionally removed to avoid fabricated claims -->
+                    </div>
+                    <!-- Profile Creation Sidebar -->
+                    <div class="space-y-6">
+                        <div class="cofounder-card-pro p-6">
+                            <h3 class="text-2xl font-bold mb-4 flex items-center gap-2"><span>🧪</span>Create Your Profile</h3>
+                            <p class="text-gray-400 text-sm mb-4">Add your founder profile so the matching engine can include you.</p>
+                            <form id="cf-create-form" class="space-y-4">
+                                <input type="text" id="cf-name" placeholder="Full Name" class="w-full bg-black/40 border border-pink-400/30 rounded-lg px-3 py-2 text-sm" required>
+                                <input type="email" id="cf-email" placeholder="Email" class="w-full bg-black/40 border border-pink-400/30 rounded-lg px-3 py-2 text-sm" required>
+                                <input type="text" id="cf-location" placeholder="Location (e.g. SF, Remote)" class="w-full bg-black/40 border border-pink-400/30 rounded-lg px-3 py-2 text-sm">
+                                <input type="text" id="cf-interest" placeholder="Primary Domain (FinTech, EdTech...)" class="w-full bg-black/40 border border-pink-400/30 rounded-lg px-3 py-2 text-sm">
+                                <textarea id="cf-personality" rows="3" placeholder="Personality / Work style" class="w-full bg-black/40 border border-pink-400/30 rounded-lg px-3 py-2 text-sm"></textarea>
+                                <div>
+                                    <label class="text-xs text-gray-400">Commitment Level (0.0 - 1.0)</label>
+                                    <input type="number" step="0.1" min="0" max="1" id="cf-commit" class="w-full bg-black/40 border border-pink-400/30 rounded-lg px-3 py-2 text-sm" placeholder="0.9">
+                                </div>
+                                <input type="text" id="cf-skills" placeholder="Skills (comma separated)" class="w-full bg-black/40 border border-pink-400/30 rounded-lg px-3 py-2 text-sm">
+                                <button type="submit" class="cta-button w-full text-center font-bold py-2">Save Profile</button>
+                            </form>
+                            <div id="cf-create-status" class="text-xs mt-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // Create cofounder particles
+        function createCofounderParticles() {
+            const container = document.getElementById('cofounder-particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'cofounder-particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 25 + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Match filtering
+        document.querySelectorAll('.match-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.match-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                const filter = tab.dataset.filter;
+                const cards = document.querySelectorAll('.match-card');
+                
+                cards.forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        gsap.to(card, { opacity: 1, scale: 1, duration: 0.3 });
+                        card.style.display = 'block';
+                    } else {
+                        gsap.to(card, { 
+                            opacity: 0, 
+                            scale: 0.8, 
+                            duration: 0.3,
+                            onComplete: () => card.style.display = 'none'
+                        });
+                    }
+                });
+            });
+        });
+
+        // Magnetic effect
+        document.querySelectorAll('[data-magnetic]').forEach(el => {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                
+                gsap.to(el, {
+                    x: x * 0.2,
+                    y: y * 0.2,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+            });
+            
+            el.addEventListener('mouseleave', () => {
+                gsap.to(el, {
+                    x: 0,
+                    y: 0,
+                    duration: 0.5,
+                    ease: 'elastic.out(1, 0.3)'
+                });
+            });
+        });
+
+        // Animate match cards on scroll
+        gsap.utils.toArray('.match-card').forEach((card, i) => {
+            gsap.fromTo(card, {
+                x: i % 2 === 0 ? -100 : 100,
+                opacity: 0,
+                scale: 0.8
+            }, {
+                x: 0,
+                opacity: 1,
+                scale: 1,
+                duration: 0.8,
+                delay: i * 0.2,
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 80%'
+                }
+            });
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createCofounderParticles();
+            
+            // Animate stats
+            gsap.utils.toArray('.match-stat-card').forEach((card, i) => {
+                gsap.fromTo(card, {
+                    y: 50,
+                    opacity: 0
+                }, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.6,
+                    delay: i * 0.1,
+                    ease: 'back.out(1.7)'
+                });
+            });
+        });
+    </script>
+
+    <!-- API Integration Scripts -->
+    <script src="/static/js/api-client.js"></script>
+    <script src="/static/js/cofounder.js"></script>
+    <script>
+        // Initialize cofounder page on load
+        document.addEventListener('DOMContentLoaded', async () => {
+            console.log('🚀 Initializing cofounder page...');
+            await initializeCofounderPage();
+            console.log('✅ Cofounder page initialized');
+        });
+        
+        // Populate header user badge from stored profile
+        (async function(){
+            const id = localStorage.getItem('elevare_profile_id');
+            const nameFallback = localStorage.getItem('elevare_profile_name') || null;
+            const nameEl = document.getElementById('cf-header-name');
+            const initialsEl = document.getElementById('cf-header-initials');
+            const subEl = document.getElementById('cf-header-sub');
+            try {
+                if (!id) { return; }
+                const r = await fetch(`${window.location.origin}/matching/users`);
+                const users = await r.json();
+                const user = Array.isArray(users) ? users.find(u => String(u.id) === String(id)) : null;
+                const name = user?.name || nameFallback || 'Profile';
+                if (nameEl) nameEl.textContent = name;
+                if (initialsEl) initialsEl.textContent = (name.split(' ').map(s=>s[0]).join('').slice(0,2) || '--').toUpperCase();
+                if (subEl) subEl.textContent = user?.interest || user?.location || '';
+            } catch(_){
+                if (nameFallback && nameEl) nameEl.textContent = nameFallback;
+            }
+        })();
+    </script>
+
+</body>
+</html>

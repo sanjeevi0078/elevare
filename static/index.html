@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elevare - Startup Idea Validator</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Elevare</h1>
+            <p class="tagline">Transform Your Startup Ideas into Validated Concepts</p>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-btn active" data-tab="idea-validator">Idea Validator</button>
+            <button class="tab-btn" data-tab="cofounder-matching">Cofounder Matching</button>
+        </nav>
+
+        <!-- Idea Validator Tab -->
+        <div id="idea-validator" class="tab-content active">
+            <div class="card">
+                <h2>💡 Validate Your Startup Idea</h2>
+                <form id="idea-form">
+                    <div class="form-group">
+                        <label for="raw-idea">Describe Your Idea</label>
+                        <textarea 
+                            id="raw-idea" 
+                            rows="6" 
+                            placeholder="Example: A mobile app that helps freelancers track their time and generate invoices automatically. Target users are freelance designers and developers in urban areas."
+                            required
+                        ></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <span class="btn-text">Validate Idea</span>
+                        <span class="spinner" style="display: none;"></span>
+                    </button>
+                </form>
+
+                <div id="idea-results" class="results" style="display: none;">
+                    <h3>📊 Analysis Results</h3>
+                    
+                    <div class="score-card">
+                        <div class="score-circle">
+                            <span id="overall-score" class="score-value">0.0</span>
+                            <span class="score-label">Overall Score</span>
+                        </div>
+                    </div>
+
+                    <div class="result-section">
+                        <h4>🎯 Refined Concept</h4>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <strong>Title:</strong>
+                                <span id="idea-title">-</span>
+                            </div>
+                            <div class="info-item">
+                                <strong>Domain:</strong>
+                                <span id="core-domain">-</span>
+                            </div>
+                            <div class="info-item">
+                                <strong>Location:</strong>
+                                <span id="location">-</span>
+                            </div>
+                            <div class="info-item">
+                                <strong>Feasibility Score:</strong>
+                                <span id="feasibility-score">-</span>
+                            </div>
+                        </div>
+                        <div class="info-block">
+                            <strong>Problem Statement:</strong>
+                            <p id="problem-statement">-</p>
+                        </div>
+                        <div class="info-block">
+                            <strong>Solution Concept:</strong>
+                            <p id="solution-concept">-</p>
+                        </div>
+                        <div class="info-block">
+                            <strong>Target User:</strong>
+                            <p id="target-user">-</p>
+                        </div>
+                        <div class="info-block">
+                            <strong>Suggestions:</strong>
+                            <ul id="suggestions-list"></ul>
+                        </div>
+                    </div>
+
+                    <div class="result-section">
+                        <h4>📈 Market Analysis</h4>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <strong>Market Viability:</strong>
+                                <span id="market-score">-</span>
+                            </div>
+                            <div class="info-item">
+                                <strong>Trend Score:</strong>
+                                <span id="trend-score">-</span>
+                            </div>
+                            <div class="info-item">
+                                <strong>Competitors:</strong>
+                                <span id="competitor-count">-</span>
+                            </div>
+                        </div>
+                        <div class="info-block">
+                            <strong>Rationale:</strong>
+                            <p id="market-rationale">-</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="idea-error" class="error-message" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- Cofounder Matching Tab -->
+        <div id="cofounder-matching" class="tab-content">
+            <div class="card">
+                <h2>🤝 Find Your Cofounder</h2>
+                
+                <div class="section">
+                    <h3>Create Your Profile</h3>
+                    <form id="user-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="user-name">Name *</label>
+                                <input type="text" id="user-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="user-email">Email *</label>
+                                <input type="email" id="user-email" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="user-location">Location</label>
+                                <input type="text" id="user-location" placeholder="e.g., San Francisco">
+                            </div>
+                            <div class="form-group">
+                                <label for="user-interest">Interest</label>
+                                <input type="text" id="user-interest" placeholder="e.g., Fintech">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="user-personality">Personality</label>
+                                <input type="text" id="user-personality" placeholder="e.g., Analytical">
+                            </div>
+                            <div class="form-group">
+                                <label for="user-commitment">Commitment Level (0-1)</label>
+                                <input type="number" id="user-commitment" min="0" max="1" step="0.1" placeholder="0.8">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="user-skills">Skills (comma-separated)</label>
+                            <input type="text" id="user-skills" placeholder="e.g., Python, React, Marketing">
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <span class="btn-text">Create Profile</span>
+                            <span class="spinner" style="display: none;"></span>
+                        </button>
+                    </form>
+                    <div id="user-success" class="success-message" style="display: none;"></div>
+                    <div id="user-error" class="error-message" style="display: none;"></div>
+                </div>
+
+                <div class="section">
+                    <h3>All Users</h3>
+                    <button id="load-users-btn" class="btn btn-secondary">Load Users</button>
+                    <div id="users-list" class="users-grid"></div>
+                </div>
+
+                <div class="section">
+                    <h3>Find Matches</h3>
+                    <div class="form-group">
+                        <label for="match-user-id">Enter User ID</label>
+                        <input type="number" id="match-user-id" placeholder="e.g., 1">
+                    </div>
+                    <button id="find-matches-btn" class="btn btn-secondary">Find Matches</button>
+                    <div id="matches-list" class="matches-grid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

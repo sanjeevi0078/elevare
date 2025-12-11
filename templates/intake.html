@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elevare - Idea Intake</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body class="overflow-x-hidden intake-body">
+
+    <!-- Floating Particles Background -->
+    <div id="intake-particles" class="fixed inset-0 pointer-events-none z-0"></div>
+    
+    <!-- Animated Background Orbs -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="intake-orb orb-1"></div>
+        <div class="intake-orb orb-2"></div>
+        <div class="intake-orb orb-3"></div>
+    </div>
+
+    <header class="fixed w-full top-0 left-0 z-50 glass-morphism-enhanced backdrop-blur-xl">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="/" class="text-4xl font-black animated-gradient-text-enhanced hover-magnetic" data-magnetic>Elevare</a>
+            <div class="flex items-center space-x-4">
+                <a href="/user" class="text-purple-300 hover:text-purple-200 transition-colors font-medium">← Back to Dashboard</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="min-h-screen flex items-center justify-center px-4 pt-20 relative z-10">
+        <div class="w-full max-w-3xl">
+            <!-- Welcome Header -->
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center gap-2 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 border border-yellow-400/30 rounded-full px-4 py-2 mb-6 animate-float">
+                    <div class="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+                    <span class="text-sm font-medium text-yellow-200">💡 Idea Refinement Engine</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-black mb-4">
+                    <span class="holographic-text-pro">TRANSFORM YOUR</span>
+                    <span class="block text-2xl md:text-3xl text-purple-200 font-light mt-2">RAW IDEA INTO GOLD</span>
+                </h1>
+                <p class="text-gray-400 text-lg">Let AI help you refine and perfect your startup concept ✨</p>
+            </div>
+
+            <!-- Idea Intake Form -->
+            <div class="intake-card-pro relative">
+                <div class="absolute inset-0 bg-gradient-to-r from-yellow-500/20 via-orange-500/20 to-red-500/20 rounded-3xl blur-xl"></div>
+                
+                <div class="relative bg-black/40 backdrop-blur-2xl border border-yellow-400/30 rounded-3xl p-8">
+                    <form id="ideaForm" class="space-y-8">
+                        <!-- Idea Description -->
+                        <div class="intake-input-group">
+                            <label class="intake-input-label">
+                                <i class="fas fa-pen text-yellow-400"></i>
+                                Describe your idea in detail
+                            </label>
+                            <textarea id="ideaDescription" class="intake-textarea-field" rows="6" placeholder="Tell us everything! What problem does it solve? Who is it for? How does it work? Don't worry about being perfect - just brain dump your thoughts here..." required></textarea>
+                        </div>
+
+                        <!-- Problem Statement -->
+                        <div class="intake-input-group">
+                            <label class="intake-input-label">
+                                <i class="fas fa-exclamation-triangle text-yellow-400"></i>
+                                What problem are you solving?
+                            </label>
+                            <textarea id="problemStatement" class="intake-textarea-field" rows="4" placeholder="Describe the pain point or challenge your target audience faces..." required></textarea>
+                        </div>
+
+                        <!-- Industry Selection -->
+                        <div class="intake-input-group">
+                            <label class="intake-input-label">
+                                <i class="fas fa-industry text-yellow-400"></i>
+                                Which industry best fits your idea?
+                            </label>
+                            <div class="industry-grid">
+                                <label class="industry-option">
+                                    <input type="radio" name="industry" value="EdTech" required>
+                                    <span class="industry-label">🎓 EdTech</span>
+                                </label>
+                                <label class="industry-option">
+                                    <input type="radio" name="industry" value="FinTech" required>
+                                    <span class="industry-label">💰 FinTech</span>
+                                </label>
+                                <label class="industry-option">
+                                    <input type="radio" name="industry" value="HealthTech" required>
+                                    <span class="industry-label">🏥 HealthTech</span>
+                                </label>
+                                <label class="industry-option">
+                                    <input type="radio" name="industry" value="AgriTech" required>
+                                    <span class="industry-label">🌱 AgriTech</span>
+                                </label>
+                                <label class="industry-option">
+                                    <input type="radio" name="industry" value="AI/ML" required>
+                                    <span class="industry-label">🤖 AI/ML</span>
+                                </label>
+                                <label class="industry-option">
+                                    <input type="radio" name="industry" value="SaaS" required>
+                                    <span class="industry-label">☁️ SaaS</span>
+                                </label>
+                                <label class="industry-option">
+                                    <input type="radio" name="industry" value="E-commerce" required>
+                                    <span class="industry-label">🛒 E-commerce</span>
+                                </label>
+                                <label class="industry-option">
+                                    <input type="radio" name="industry" value="Other" required>
+                                    <span class="industry-label">🔧 Other</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Resources Needed -->
+                        <div class="intake-input-group">
+                            <label class="intake-input-label">
+                                <i class="fas fa-toolbox text-yellow-400"></i>
+                                What resources do you need most? (Select all that apply)
+                            </label>
+                            <div class="resources-grid">
+                                <label class="resource-option">
+                                    <input type="checkbox" name="resources" value="Technical Cofounder">
+                                    <span class="resource-label">👨‍💻 Technical Cofounder</span>
+                                </label>
+                                <label class="resource-option">
+                                    <input type="checkbox" name="resources" value="Business Cofounder">
+                                    <span class="resource-label">💼 Business Cofounder</span>
+                                </label>
+                                <label class="resource-option">
+                                    <input type="checkbox" name="resources" value="Funding">
+                                    <span class="resource-label">💰 Funding</span>
+                                </label>
+                                <label class="resource-option">
+                                    <input type="checkbox" name="resources" value="Mentorship">
+                                    <span class="resource-label">🎯 Mentorship</span>
+                                </label>
+                                <label class="resource-option">
+                                    <input type="checkbox" name="resources" value="Market Research">
+                                    <span class="resource-label">📊 Market Research</span>
+                                </label>
+                                <label class="resource-option">
+                                    <input type="checkbox" name="resources" value="Legal Help">
+                                    <span class="resource-label">⚖️ Legal Help</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="text-center pt-6">
+                            <button type="submit" class="intake-submit-btn group">
+                                <span class="relative z-10 flex items-center justify-center gap-3">
+                                    <i class="fas fa-magic text-xl group-hover:rotate-12 transition-transform"></i>
+                                    <span class="font-bold text-xl">Refine My Idea with AI</span>
+                                    <i class="fas fa-arrow-right group-hover:translate-x-2 transition-transform"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Idea Structure Blueprint (populated by crystallizeIdea) -->
+                    <div id="ideaBlueprintContainer" class="hidden">
+                        <!-- Blueprint will be dynamically generated here -->
+                    </div>
+
+                    <!-- Results Panel (populated by intake.js) -->
+                    <div id="ideaResults" class="mt-8 hidden">
+                        <!-- Results will be dynamically generated here -->
+                    </div>
+
+                    <!-- Live Refinement Preview (real-time NLP) -->
+                    <div id="liveIdeaPreview" class="mt-8 hidden bg-black/30 border border-yellow-400/30 rounded-2xl p-5">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-lg font-bold flex items-center gap-2"><span>⚡</span><span>Real-Time Refinement</span></h3>
+                            <span id="livePreviewStatus" class="text-xs text-gray-400">Idle</span>
+                        </div>
+                        <div id="livePreviewContent" class="space-y-3 text-sm text-gray-300"></div>
+                    </div>
+
+                    <!-- Error Panel -->
+                    <div id="ideaError" class="mt-6 hidden"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- API Integration Scripts -->
+    <script src="/static/js/api-client.js?v=20251201-6"></script>
+    <script src="/static/js/idea-blueprint.js?v=20251203-1"></script>
+    <script src="/static/js/intake.js?v=20251203-1"></script>
+    
+    <!-- Magnetic effect for header -->
+    <script>
+        document.querySelectorAll('[data-magnetic]').forEach(el => {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                
+                gsap.to(el, {
+                    x: x * 0.2,
+                    y: y * 0.2,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+            });
+            
+            el.addEventListener('mouseleave', () => {
+                gsap.to(el, {
+                    x: 0,
+                    y: 0,
+                    duration: 0.5,
+                    ease: 'elastic.out(1, 0.3)'
+                });
+            });
+        });
+    </script>
+
+    <!-- Premium Glassmorphic Insight Modal -->
+    <div id="explanation-modal" class="insight-backdrop" onclick="closeExplanation()">
+        <div class="insight-modal" onclick="event.stopPropagation()">
+            
+            <div class="insight-header">
+                <div class="insight-icon-box">
+                    <i id="insight-icon" class="fas fa-brain"></i>
+                </div>
+                <div>
+                    <div class="text-xs text-gray-400 uppercase tracking-wide mb-1">Explainable AI Analysis</div>
+                    <h2 id="modal-title" class="insight-title">Analysis</h2>
+                </div>
+                <div id="insight-score" class="insight-badge">Score: 0%</div>
+            </div>
+
+            <div class="insight-body">
+                <p id="modal-text">AI is analyzing this metric...</p>
+            </div>
+
+            <div id="insight-rec-box" class="insight-recommendation hidden">
+                <i class="fas fa-lightbulb"></i>
+                <div>
+                    <h4 class="text-sm font-bold text-green-400 mb-1">Recommended Action</h4>
+                    <p id="insight-recommendation" class="text-sm text-gray-300">Try improving this dimension.</p>
+                </div>
+            </div>
+
+            <button class="close-insight-btn" onclick="closeExplanation()">Close Analysis</button>
+        </div>
+    </div>
+
+    <style>
+        /* Premium Glassmorphic Modal Styles */
+        .insight-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 5, 10, 0.7);
+            backdrop-filter: blur(12px);
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .insight-backdrop.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .insight-modal {
+            width: 100%;
+            max-width: 600px;
+            background: linear-gradient(145deg, rgba(20, 20, 30, 0.9), rgba(10, 10, 20, 0.95));
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 0 50px rgba(139, 92, 246, 0.15),
+                        inset 0 0 20px rgba(139, 92, 246, 0.05);
+            transform: scale(0.95) translateY(20px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .insight-backdrop.active .insight-modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .insight-modal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #a78bfa, transparent);
+            opacity: 0.7;
+        }
+
+        .insight-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 20px;
+        }
+
+        .insight-icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: rgba(139, 92, 246, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #c4b5fd;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .insight-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            letter-spacing: -0.02em;
+        }
+
+        .insight-badge {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #a78bfa;
+            background: rgba(139, 92, 246, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-left: auto;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .insight-body {
+            color: #d1d5db;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .insight-recommendation {
+            margin-top: 24px;
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .insight-recommendation i {
+            color: #34d399;
+            margin-top: 4px;
+        }
+
+        .insight-recommendation.hidden {
+            display: none;
+        }
+
+        .close-insight-btn {
+            margin-top: 24px;
+            width: 100%;
+            padding: 12px;
+            background: #1f2937;
+            border: 1px solid #374151;
+            color: white;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .close-insight-btn:hover {
+            background: #374151;
+            border-color: #4b5563;
+        }
+    </style>
+
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Elevare</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body class="bg-black text-white min-h-screen">
+    <!-- Header -->
+    <header class="fixed w-full top-0 left-0 z-50 glass-morphism">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="/" class="text-3xl font-bold animated-gradient-text">Elevare</a>
+            <div class="flex items-center gap-4">
+                <a href="/dashboard" class="text-purple-300 hover:text-purple-200">← Dashboard</a>
+                <button onclick="logout()" class="text-red-400 hover:text-red-300">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 pt-24 pb-12">
+        <div class="max-w-4xl mx-auto">
+            <!-- Profile Header -->
+            <div class="glass-morphism-enhanced rounded-3xl p-8 mb-8">
+                <div class="flex items-start gap-6">
+                    <div class="w-24 h-24 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-4xl font-bold" id="profile-avatar">
+                        --
+                    </div>
+                    <div class="flex-1">
+                        <h1 class="text-4xl font-bold mb-2 animated-gradient-text" id="profile-name">Loading...</h1>
+                        <p class="text-gray-400 mb-4" id="profile-email">email@example.com</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-purple-500/20 border border-purple-500/50 rounded-full text-sm" id="profile-location">
+                                <i class="fas fa-map-marker-alt"></i> <span>Unknown</span>
+                            </span>
+                            <span class="px-3 py-1 bg-blue-500/20 border border-blue-500/50 rounded-full text-sm" id="profile-interest">
+                                <i class="fas fa-lightbulb"></i> <span>No interests</span>
+                            </span>
+                        </div>
+                        <button onclick="editProfile()" class="px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg hover:from-purple-500 hover:to-pink-500 transition-all">
+                            <i class="fas fa-edit"></i> Edit Profile
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="glass-morphism rounded-2xl p-6 text-center">
+                    <div class="text-4xl mb-2">💡</div>
+                    <div class="text-3xl font-bold text-purple-300" id="ideas-count">0</div>
+                    <div class="text-sm text-gray-400">Ideas Refined</div>
+                </div>
+                <div class="glass-morphism rounded-2xl p-6 text-center">
+                    <div class="text-4xl mb-2">🤝</div>
+                    <div class="text-3xl font-bold text-pink-300" id="matches-count">0</div>
+                    <div class="text-sm text-gray-400">Cofounder Matches</div>
+                </div>
+                <div class="glass-morphism rounded-2xl p-6 text-center">
+                    <div class="text-4xl mb-2">🎯</div>
+                    <div class="text-3xl font-bold text-blue-300" id="commitment-level">0%</div>
+                    <div class="text-sm text-gray-400">Commitment Level</div>
+                </div>
+            </div>
+
+            <!-- Skills Section -->
+            <div class="glass-morphism-enhanced rounded-3xl p-8 mb-8">
+                <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                    <i class="fas fa-star text-yellow-400"></i> Your Skills
+                </h2>
+                <div class="flex flex-wrap gap-3" id="skills-list">
+                    <div class="text-gray-500 italic">No skills added yet</div>
+                </div>
+            </div>
+
+            <!-- Refined Ideas History -->
+            <div class="glass-morphism-enhanced rounded-3xl p-8">
+                <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                    <i class="fas fa-history text-green-400"></i> Your Refined Ideas
+                </h2>
+                <div id="ideas-list" class="space-y-4">
+                    <div class="text-center text-gray-500 italic py-8">
+                        No ideas refined yet. <a href="/intake" class="text-purple-400 hover:text-purple-300">Start refining now!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Get current user from token
+        async function loadProfile() {
+            try {
+                const token = localStorage.getItem('access_token');
+                if (!token) {
+                    window.location.href = '/login';
+                    return;
+                }
+
+                // Decode JWT to get user ID (simple decode, not verified)
+                const payload = JSON.parse(atob(token.split('.')[1]));
+                const userId = payload.sub;
+
+                // Fetch user data
+                const response = await fetch(`/matching/users/${userId}`);
+
+                if (!response.ok) {
+                    console.error('Failed to load user profile:', response.status);
+                    // Don't redirect - show error instead
+                    document.getElementById('profile-name').textContent = 'Error loading profile';
+                    return;
+                }
+
+                const user = await response.json();
+                displayProfile(user);
+
+            } catch (error) {
+                console.error('Error loading profile:', error);
+                // If token is invalid, redirect to login
+                localStorage.removeItem('access_token');
+                window.location.href = '/login';
+            }
+        }
+
+        function displayProfile(user) {
+            // Avatar
+            const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+            document.getElementById('profile-avatar').textContent = initials;
+
+            // Basic info
+            document.getElementById('profile-name').textContent = user.name;
+            document.getElementById('profile-email').textContent = user.email;
+            
+            // Location
+            const locationSpan = document.querySelector('#profile-location span');
+            locationSpan.textContent = user.location || 'Location not set';
+
+            // Interest
+            const interestSpan = document.querySelector('#profile-interest span');
+            interestSpan.textContent = user.interest || 'No interests set';
+
+            // Stats
+            document.getElementById('commitment-level').textContent = 
+                user.commitment_level ? `${Math.round(user.commitment_level * 100)}%` : '0%';
+
+            // Skills
+            if (user.skills && user.skills.length > 0) {
+                const skillsList = document.getElementById('skills-list');
+                skillsList.innerHTML = user.skills.map(skill => `
+                    <span class="px-4 py-2 bg-purple-900/30 border border-purple-500/50 rounded-full text-sm">
+                        ${skill.name}
+                    </span>
+                `).join('');
+            }
+
+            // Store user ID for later use
+            sessionStorage.setItem('currentUserId', user.id);
+            
+            // Load user's ideas
+            loadUserIdeas(user.id);
+        }
+
+        async function loadUserIdeas(userId) {
+            try {
+                const response = await fetch(`/ideas/?user_id=${userId}`);
+                if (!response.ok) throw new Error('Failed to load ideas');
+                
+                const ideas = await response.json();
+                
+                // Update ideas count
+                document.getElementById('ideas-count').textContent = ideas.length;
+                
+                if (ideas.length === 0) {
+                    return; // Keep default "No ideas" message
+                }
+                
+                // Display ideas
+                const ideasList = document.getElementById('ideas-list');
+                ideasList.innerHTML = ideas.map(idea => {
+                    const refined = idea.refined_idea || {};
+                    const market = idea.market_profile || {};
+                    const score = idea.overall_confidence_score || 0;
+                    const createdDate = new Date(idea.created_at * 1000).toLocaleDateString();
+                    
+                    return `
+                        <div class="bg-black/30 border border-purple-500/30 rounded-xl p-6 hover:border-purple-500/60 transition-all">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex-1">
+                                    <h3 class="text-xl font-bold text-purple-200 mb-2">
+                                        ${refined.idea_title || 'Untitled Idea'}
+                                    </h3>
+                                    <p class="text-gray-400 text-sm mb-3">${refined.problem_statement || ''}</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-3 py-1 bg-blue-500/20 border border-blue-500/50 rounded-full text-xs">
+                                            ${refined.core_domain || 'Other'}
+                                        </span>
+                                        <span class="px-3 py-1 bg-green-500/20 border border-green-500/50 rounded-full text-xs">
+                                            Score: ${score.toFixed(1)}
+                                        </span>
+                                        <span class="px-3 py-1 bg-gray-500/20 border border-gray-500/50 rounded-full text-xs">
+                                            ${createdDate}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button onclick="findCofoundersByIdea('${idea.id}')" class="px-4 py-2 bg-purple-600 hover:bg-purple-500 rounded-lg text-sm transition-all" title="Find Cofounders">
+                                        <i class="fas fa-users"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            ${refined.solution_concept ? `
+                            <div class="border-t border-gray-700 pt-4 mt-4">
+                                <p class="text-sm text-gray-300">${refined.solution_concept}</p>
+                            </div>
+                            ` : ''}
+                        </div>
+                    `;
+                }).join('');
+                
+            } catch (error) {
+                console.error('Error loading ideas:', error);
+            }
+        }
+
+        function findCofoundersByIdea(ideaId) {
+            // Navigate to cofounder matching page with this idea
+            window.location.href = '/cofounder?idea_id=' + ideaId;
+        }
+
+        function editProfile() {
+            window.location.href = '/profile-setup';
+        }
+
+        function logout() {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('token_type');
+            sessionStorage.clear();
+            window.location.href = '/login';
+        }
+
+        // Load profile on page load
+        document.addEventListener('DOMContentLoaded', loadProfile);
+    </script>
+</body>
+</html>

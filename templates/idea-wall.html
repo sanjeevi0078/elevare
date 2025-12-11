@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elevare - Global Idea Wall</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body class="overflow-x-hidden">
+
+    <header class="fixed w-full top-0 left-0 z-50 glass-morphism">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="/" class="text-3xl font-bold animated-gradient-text">Elevare</a>
+            <div class="flex items-center space-x-4">
+                 <a href="/login" class="hidden md:block text-white border border-indigo-500 py-2 px-4 rounded-lg hover:bg-indigo-500 transition">Log In</a>
+                 <a href="/intake" class="cta-button inline-block text-white font-bold py-2 px-4 rounded-lg">Get Started</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="pt-24">
+        <section class="py-20 px-4 bg-black">
+             <div class="container mx-auto">
+                <div class="text-center mb-12">
+                    <h3 class="text-4xl font-bold mb-4">Global Idea Wall</h3>
+                    <p class="text-gray-400 mb-6 max-w-2xl mx-auto">A space for collaborative innovation. Browse ideas, offer feedback, or find a project that ignites your passion.</p>
+                    
+                    <!-- Live Status Badge -->
+                    <div class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-400/30 rounded-full px-4 py-2">
+                        <div class="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+                        <span class="text-sm font-medium text-purple-200">
+                            🔴 Live Feed • <span id="active-users-count">1</span> Active
+                        </span>
+                    </div>
+                </div>
+                
+                <!-- Ideas Grid -->
+                <div id="ideas-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Ideas will be loaded here dynamically -->
+                    <div class="col-span-full text-center py-8">
+                        <i class="fas fa-spinner fa-spin fa-3x text-purple-400 mb-4"></i>
+                        <p class="text-gray-400">Loading ideas...</p>
+                    </div>
+                </div>
+             </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900/50 py-12 px-4">
+        <div class="container mx-auto text-center text-gray-400">
+            <h4 class="text-2xl font-bold animated-gradient-text mb-4">Elevare</h4>
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="#" class="hover:text-white transition"><i class="fab fa-twitter fa-2x"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fab fa-linkedin fa-2x"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fab fa-github fa-2x"></i></a>
+            </div>
+            <p>&copy; 2024 Elevare. All rights reserved. Democratizing entrepreneurship for everyone.</p>
+        </div>
+    </footer>
+
+    <!-- API Integration Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="/static/js/api-client.js"></script>
+    <script src="/static/js/idea-wall.js"></script>
+    
+    <style>
+        /* Pulse animations for real-time updates */
+        @keyframes newIdeaPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.7); }
+            50% { box-shadow: 0 0 0 10px rgba(168, 85, 247, 0); }
+        }
+        
+        .new-idea-pulse {
+            animation: newIdeaPulse 2s ease-in-out 3;
+        }
+        
+        @keyframes highlightPulse {
+            0%, 100% { border-color: rgba(168, 85, 247, 0.3); }
+            50% { border-color: rgba(168, 85, 247, 0.8); }
+        }
+        
+        .highlight-pulse {
+            animation: highlightPulse 1s ease-in-out 2;
+        }
+        
+        .updating-pulse {
+            animation: highlightPulse 0.5s ease-in-out 1;
+        }
+        
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
+
+</body>
+</html>

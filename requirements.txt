@@ -1,0 +1,122 @@
+# ====================================================================
+# File: requirements.txt
+# Purpose: Production-ready dependencies for Elevare Platform
+# ====================================================================
+
+# ==========================================
+# WEB FRAMEWORK & SERVER
+# ==========================================
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+websockets>=12.0
+jinja2>=3.1.0
+python-multipart>=0.0.6  # For file uploads
+
+# ==========================================
+# DATA VALIDATION & CONFIGURATION
+# ==========================================
+pydantic>=2.5.0
+pydantic-settings>=2.1.0  # For environment config management
+email-validator>=2.1.0  # For email validation
+
+# ==========================================
+# AI/NLP INTEGRATION
+# ==========================================
+langchain-groq>=0.1.0
+langchain>=0.1.0
+langgraph>=0.0.40
+langgraph-checkpoint-sqlite>=1.0.0
+httpx>=0.26.0
+
+# Streaming Support
+sse-starlette>=1.6.0
+
+# RAG & Knowledge Base
+langchain-text-splitters>=0.0.1
+langchain-community>=0.0.20
+chromadb>=0.4.0
+
+# ==========================================
+# DATABASE & CACHING
+# ==========================================
+SQLAlchemy>=2.0.25
+alembic>=1.13.0  # Database migrations
+redis>=5.0.0
+hiredis>=2.3.0  # Faster Redis protocol parsing
+
+# ==========================================
+# SECURITY & AUTHENTICATION
+# ==========================================
+python-jose[cryptography]>=3.3.0  # JWT tokens
+passlib[bcrypt]>=1.7.4  # Password hashing
+python-multipart>=0.0.6  # OAuth2 password flow
+
+# ==========================================
+# HTTP & API CLIENTS
+# ==========================================
+requests>=2.31.0
+httpx>=0.26.0
+aiohttp>=3.9.0  # Async HTTP client
+
+# ==========================================
+# UTILITIES
+# ==========================================
+python-dotenv>=1.0.0
+pytrends>=4.9.0  # Google Trends
+tenacity>=8.2.0  # Retry logic
+python-dateutil>=2.8.0
+
+# ==========================================
+# MONITORING & LOGGING
+# ==========================================
+sentry-sdk[fastapi]>=1.40.0  # Error tracking
+prometheus-client>=0.19.0  # Metrics
+python-json-logger>=2.0.0  # Structured logging
+
+# ==========================================
+# TESTING
+# ==========================================
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.1.0  # Coverage reporting
+pytest-mock>=3.12.0
+httpx>=0.26.0  # For testing async endpoints
+
+# ==========================================
+# CODE QUALITY
+# ==========================================
+black>=23.12.0  # Code formatter
+ruff>=0.1.0  # Fast linter
+mypy>=1.8.0  # Type checking
+pre-commit>=3.6.0  # Git hooks
+
+# ==========================================
+# PRODUCTION DEPENDENCIES
+# ==========================================
+gunicorn>=21.2.0  # Production WSGI server
+gevent>=23.9.0  # Async worker support
+
+# ==========================================
+# OPTIONAL: EMAIL & NOTIFICATIONS
+# ==========================================
+sendgrid>=6.11.0  # Email service
+# boto3>=1.34.0  # AWS SDK (for SES, S3, etc.)
+
+# ==========================================
+# OPTIONAL: FILE STORAGE
+# ==========================================
+# boto3>=1.34.0  # AWS S3
+# google-cloud-storage>=2.14.0  # Google Cloud Storage
+
+# ==========================================
+# MODEL CONTEXT PROTOCOL (MCP)
+# ==========================================
+mcp>=1.0.0  # Official MCP server library
+
+# ==========================================
+# MACHINE LEARNING (Optional - for enhanced matching)
+# ==========================================
+# sentence-transformers>=2.3.0  # Semantic embeddings
+# scikit-learn>=1.4.0  # ML utilities
+# numpy>=1.26.0
+

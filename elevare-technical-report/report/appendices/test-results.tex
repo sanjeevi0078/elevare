@@ -1,0 +1,11 @@
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/agents")
+def read_agents():
+    return {"agents": ["Agent1", "Agent2", "Agent3"]}
+
+@app.post("/agents/{agent_id}/action")
+def perform_action(agent_id: int, action: str):
+    return {"agent_id": agent_id, "action": action}

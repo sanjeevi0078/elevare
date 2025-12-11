@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elevare - Elite Profile Creation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/profile-setup.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body class="overflow-y-auto elite-body">
+    <!-- Elite Particles System -->
+    <div class="elite-particles-container">
+        <div class="elite-particle" style="--delay: 0s; --duration: 8s;"></div>
+        <div class="elite-particle" style="--delay: 1s; --duration: 12s;"></div>
+        <div class="elite-particle" style="--delay: 2s; --duration: 10s;"></div>
+        <div class="elite-particle" style="--delay: 3s; --duration: 15s;"></div>
+        <div class="elite-particle" style="--delay: 4s; --duration: 9s;"></div>
+    </div>
+
+    <!-- Elite Header -->
+    <header class="fixed w-full top-0 left-0 z-50 elite-header">
+        <nav class="container mx-auto px-8 py-4 flex justify-between items-center">
+            <div class="elite-logo-container">
+                <a href="/" class="elite-logo">Elevare</a>
+                <div class="elite-logo-glow"></div>
+            </div>
+            <div class="elite-nav-badge">
+                <i class="fas fa-crown mr-2"></i>
+                <span>Elite Setup</span>
+            </div>
+        </nav>
+    </header>
+
+    <main class="relative z-10 pt-32 pb-16">
+        <div class="container mx-auto max-w-7xl px-6">
+            <!-- Elite Hero Section -->
+            <div class="text-center mb-12">
+                <div class="elite-status-badge mb-6">
+                    <div class="elite-status-icon">
+                        <i class="fas fa-diamond"></i>
+                    </div>
+                    <span class="elite-status-text">Exclusive Profile Creation</span>
+                    <div class="elite-status-pulse"></div>
+                </div>
+                
+                <h1 class="elite-main-title mb-6">
+                    <span class="elite-title-word">BUILD YOUR</span>
+                    <span class="elite-title-word-highlight">LEGENDARY</span>
+                    <span class="elite-title-word">PROFILE</span>
+                </h1>
+                
+                <p class="elite-subtitle">Unlock unprecedented opportunities with our premium profiling system</p>
+            </div>
+
+            <!-- Elite Form Container -->
+            <div class="elite-form-container">
+                <div class="elite-form-glow"></div>
+                <div class="elite-form-border"></div>
+                
+                <form id="eliteProfileForm" class="elite-form">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- Personal Excellence Column -->
+                        <div class="elite-column">
+                            <div class="elite-section-header mb-6">
+                                <div class="elite-section-icon">
+                                    <i class="fas fa-user-crown"></i>
+                                </div>
+                                <div class="elite-section-info">
+                                    <h2 class="elite-section-title">Personal Excellence</h2>
+                                    <p class="elite-section-subtitle">Define your identity</p>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-6">
+                                <div class="elite-field-group">
+                                    <label class="elite-field-label">
+                                        <span class="elite-label-text">Full Name</span>
+                                        <span class="elite-required-star">★</span>
+                                    </label>
+                                    <div class="elite-input-wrapper">
+                                        <div class="elite-input-icon">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+                                        <input type="text" name="fullName" required class="elite-input" placeholder="Enter your distinguished name">
+                                        <div class="elite-input-highlight"></div>
+                                        <div class="elite-input-glow"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="elite-field-group">
+                                    <label class="elite-field-label">
+                                        <span class="elite-label-text">Professional Role</span>
+                                        <span class="elite-required-star">★</span>
+                                    </label>
+                                    <div class="elite-select-wrapper">
+                                        <div class="elite-input-icon">
+                                            <i class="fas fa-briefcase"></i>
+                                        </div>
+                                        <select name="role" required class="elite-select">
+                                            <option value="">Select your position</option>
+                                            <option value="student">Student</option>
+                                            <option value="professional">Working Professional</option>
+                                            <option value="entrepreneur">Entrepreneur</option>
+                                            <option value="freelancer">Freelancer</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                        <div class="elite-select-arrow">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </div>
+                                        <div class="elite-input-highlight"></div>
+                                        <div class="elite-input-glow"></div>
+                                    </div>
+                                </div>
+
+                                <div class="elite-field-group">
+                                    <label class="elite-field-label">
+                                        <span class="elite-label-text">Vision Statement</span>
+                                    </label>
+                                    <div class="elite-textarea-wrapper">
+                                        <textarea name="goals" rows="4" class="elite-textarea" placeholder="Share your entrepreneurial vision and goals..."></textarea>
+                                        <div class="elite-textarea-glow"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Industry Mastery Column -->
+                        <div class="elite-column">
+                            <div class="elite-section-header mb-6">
+                                <div class="elite-section-icon">
+                                    <i class="fas fa-industry"></i>
+                                </div>
+                                <div class="elite-section-info">
+                                    <h2 class="elite-section-title">Industry Mastery</h2>
+                                    <p class="elite-section-subtitle">Your domain expertise</p>
+                                </div>
+                            </div>
+                            
+                            <div class="elite-industry-grid">
+                                <div class="elite-industry-card" data-industry="technology">
+                                    <div class="elite-card-glow"></div>
+                                    <div class="elite-card-content">
+                                        <div class="elite-card-icon">
+                                            <i class="fas fa-laptop-code"></i>
+                                        </div>
+                                        <h3 class="elite-card-title">Technology</h3>
+                                        <div class="elite-card-check">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                    </div>
+                                    <input type="checkbox" name="industries" value="technology" class="elite-checkbox">
+                                </div>
+                                
+                                <div class="elite-industry-card" data-industry="healthcare">
+                                    <div class="elite-card-glow"></div>
+                                    <div class="elite-card-content">
+                                        <div class="elite-card-icon">
+                                            <i class="fas fa-heartbeat"></i>
+                                        </div>
+                                        <h3 class="elite-card-title">Healthcare</h3>
+                                        <div class="elite-card-check">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                    </div>
+                                    <input type="checkbox" name="industries" value="healthcare" class="elite-checkbox">
+                                </div>
+                                
+                                <div class="elite-industry-card" data-industry="finance">
+                                    <div class="elite-card-glow"></div>
+                                    <div class="elite-card-content">
+                                        <div class="elite-card-icon">
+                                            <i class="fas fa-chart-line"></i>
+                                        </div>
+                                        <h3 class="elite-card-title">Finance</h3>
+                                        <div class="elite-card-check">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                    </div>
+                                    <input type="checkbox" name="industries" value="finance" class="elite-checkbox">
+                                </div>
+                                
+                                <div class="elite-industry-card" data-industry="education">
+                                    <div class="elite-card-glow"></div>
+                                    <div class="elite-card-content">
+                                        <div class="elite-card-icon">
+                                            <i class="fas fa-graduation-cap"></i>
+                                        </div>
+                                        <h3 class="elite-card-title">Education</h3>
+                                        <div class="elite-card-check">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                    </div>
+                                    <input type="checkbox" name="industries" value="education" class="elite-checkbox">
+                                </div>
+                                
+                                <div class="elite-industry-card" data-industry="retail">
+                                    <div class="elite-card-glow"></div>
+                                    <div class="elite-card-content">
+                                        <div class="elite-card-icon">
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </div>
+                                        <h3 class="elite-card-title">Retail</h3>
+                                        <div class="elite-card-check">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                    </div>
+                                    <input type="checkbox" name="industries" value="retail" class="elite-checkbox">
+                                </div>
+                                
+                                <div class="elite-industry-card" data-industry="other">
+                                    <div class="elite-card-glow"></div>
+                                    <div class="elite-card-content">
+                                        <div class="elite-card-icon">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                        <h3 class="elite-card-title">Other</h3>
+                                        <div class="elite-card-check">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                    </div>
+                                    <input type="checkbox" name="industries" value="other" class="elite-checkbox">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Elite Skills Column -->
+                        <div class="elite-column">
+                            <div class="elite-section-header mb-6">
+                                <div class="elite-section-icon">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                                <div class="elite-section-info">
+                                    <h2 class="elite-section-title">Elite Skills</h2>
+                                    <p class="elite-section-subtitle">Your competencies</p>
+                                </div>
+                            </div>
+                            
+                            <div class="elite-skills-grid">
+                                <div class="elite-skill-pill" data-skill="development">
+                                    <i class="fas fa-code"></i>
+                                    <span>Development</span>
+                                    <div class="elite-pill-glow"></div>
+                                </div>
+                                <div class="elite-skill-pill" data-skill="design">
+                                    <i class="fas fa-paint-brush"></i>
+                                    <span>Design</span>
+                                    <div class="elite-pill-glow"></div>
+                                </div>
+                                <div class="elite-skill-pill" data-skill="marketing">
+                                    <i class="fas fa-bullhorn"></i>
+                                    <span>Marketing</span>
+                                    <div class="elite-pill-glow"></div>
+                                </div>
+                                <div class="elite-skill-pill" data-skill="sales">
+                                    <i class="fas fa-handshake"></i>
+                                    <span>Sales</span>
+                                    <div class="elite-pill-glow"></div>
+                                </div>
+                                <div class="elite-skill-pill" data-skill="finance">
+                                    <i class="fas fa-calculator"></i>
+                                    <span>Finance</span>
+                                    <div class="elite-pill-glow"></div>
+                                </div>
+                                <div class="elite-skill-pill" data-skill="operations">
+                                    <i class="fas fa-cogs"></i>
+                                    <span>Operations</span>
+                                    <div class="elite-pill-glow"></div>
+                                </div>
+                                <div class="elite-skill-pill" data-skill="leadership">
+                                    <i class="fas fa-users"></i>
+                                    <span>Leadership</span>
+                                    <div class="elite-pill-glow"></div>
+                                </div>
+                                <div class="elite-skill-pill" data-skill="other">
+                                    <i class="fas fa-plus"></i>
+                                    <span>Other</span>
+                                    <div class="elite-pill-glow"></div>
+                                </div>
+                            </div>
+
+                            <!-- Elite Submit Section -->
+                            <div class="elite-submit-section mt-8">
+                                <button type="submit" class="elite-submit-btn">
+                                    <div class="elite-btn-content">
+                                        <div class="elite-btn-icon">
+                                            <i class="fas fa-rocket"></i>
+                                        </div>
+                                        <span class="elite-btn-text">Launch Elite Profile</span>
+                                    </div>
+                                    <div class="elite-btn-glow"></div>
+                                    <div class="elite-btn-particles"></div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Elite Profile Setup JavaScript
+        class EliteProfileSetup {
+            constructor() {
+                this.init();
+                this.setupAnimations();
+                this.setupInteractions();
+            }
+
+            init() {
+                this.form = document.getElementById('eliteProfileForm');
+                this.industryCards = document.querySelectorAll('.elite-industry-card');
+                this.skillPills = document.querySelectorAll('.elite-skill-pill');
+            }
+
+            setupAnimations() {
+                const tl = gsap.timeline();
+                
+                tl.from('.elite-status-badge', {
+                    duration: 1.2,
+                    y: -50,
+                    opacity: 0,
+                    ease: 'power3.out'
+                })
+                .from('.elite-title-line', {
+                    duration: 1,
+                    y: 100,
+                    opacity: 0,
+                    stagger: 0.2,
+                    ease: 'power3.out'
+                }, '-=0.5')
+                .from('.elite-subtitle', {
+                    duration: 0.8,
+                    y: 30,
+                    opacity: 0,
+                    ease: 'power2.out'
+                }, '-=0.3')
+                .from('.elite-form-container', {
+                    duration: 1.5,
+                    y: 80,
+                    opacity: 0,
+                    ease: 'power3.out'
+                }, '-=0.2')
+                .from('.elite-column', {
+                    duration: 0.8,
+                    y: 50,
+                    opacity: 0,
+                    stagger: 0.15,
+                    ease: 'power2.out'
+                }, '-=0.8');
+            }
+
+            setupInteractions() {
+                this.industryCards.forEach(card => {
+                    card.addEventListener('click', () => this.toggleIndustryCard(card));
+                });
+
+                this.skillPills.forEach(pill => {
+                    pill.addEventListener('click', () => this.toggleSkillPill(pill));
+                });
+
+                this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+            }
+
+            toggleIndustryCard(card) {
+                const checkbox = card.querySelector('.elite-checkbox');
+                const isSelected = card.classList.contains('selected');
+                
+                if (isSelected) {
+                    card.classList.remove('selected');
+                    checkbox.checked = false;
+                    gsap.to(card, { scale: 1, duration: 0.3, ease: 'power2.out' });
+                } else {
+                    card.classList.add('selected');
+                    checkbox.checked = true;
+                    gsap.to(card, { scale: 1.05, duration: 0.3, ease: 'back.out(1.7)' });
+                }
+            }
+
+            toggleSkillPill(pill) {
+                const isSelected = pill.classList.contains('selected');
+                
+                if (isSelected) {
+                    pill.classList.remove('selected');
+                    gsap.to(pill, { scale: 1, duration: 0.2 });
+                } else {
+                    pill.classList.add('selected');
+                    gsap.to(pill, { scale: 1.1, duration: 0.2, ease: 'back.out(1.7)' });
+                }
+            }
+
+            handleSubmit(e) {
+                e.preventDefault();
+                
+                const submitBtn = document.querySelector('.elite-submit-btn');
+                const btnText = document.querySelector('.elite-btn-text');
+                const btnIcon = document.querySelector('.elite-btn-icon i');
+                
+                btnText.textContent = 'Creating Elite Profile...';
+                btnIcon.className = 'fas fa-spinner fa-spin';
+                submitBtn.disabled = true;
+                
+                gsap.to(submitBtn, {
+                    scale: 0.95,
+                    duration: 0.1,
+                    yoyo: true,
+                    repeat: 1
+                });
+                
+                setTimeout(() => {
+                    window.location.href = '/user';
+                }, 3000);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new EliteProfileSetup();
+        });
+    </script>
+</body>
+</html>

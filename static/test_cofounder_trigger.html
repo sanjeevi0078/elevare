@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Cofounder Matching</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a2e;
+            color: white;
+        }
+        button {
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px 0;
+            width: 100%;
+        }
+        button:hover {
+            background: #5558dd;
+        }
+        #status {
+            margin-top: 20px;
+            padding: 15px;
+            background: #2a2a3e;
+            border-radius: 8px;
+        }
+        .idea-box {
+            background: #2a2a3e;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚀 Test Cofounder Matching</h1>
+    
+    <div class="idea-box">
+        <h3>Test Ideas:</h3>
+        <button onclick="testIdea1()">🏥 Health App for IT Professionals</button>
+        <button onclick="testIdea2()">💰 FinTech Payment Platform</button>
+        <button onclick="testIdea3()">🎓 EdTech Learning Platform</button>
+    </div>
+
+    <button onclick="testDirect()">🔧 Test Direct API Call</button>
+    
+    <div id="status"></div>
+
+    <script>
+        function testIdea1() {
+            const idea = "Building an AI-powered health tracking app for IT professionals dealing with sedentary lifestyle issues. Features include posture monitoring, break reminders, and personalized exercise routines.";
+            triggerMatching(idea, "Health App for IT Professionals");
+        }
+
+        function testIdea2() {
+            const idea = "Creating a fintech platform that simplifies cross-border payments for small businesses in emerging markets using blockchain technology and local payment integrations.";
+            triggerMatching(idea, "FinTech Payment Platform");
+        }
+
+        function testIdea3() {
+            const idea = "Developing an interactive online learning platform that uses AI to personalize curriculum for K-12 students, with real-time progress tracking and parent dashboards.";
+            triggerMatching(idea, "EdTech Learning Platform");
+        }
+
+        function triggerMatching(ideaText, title) {
+            document.getElementById('status').innerHTML = '<p>Setting up matching for: ' + title + '</p>';
+            
+            // Store in sessionStorage
+            sessionStorage.setItem('matchingIdea', ideaText);
+            sessionStorage.setItem('matchingIdeaTitle', title);
+            
+            // Redirect to cofounder page
+            window.location.href = '/cofounder?autoMatch=true';
+        }
+
+        async function testDirect() {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = '<p>Testing API directly...</p>';
+            
+            try {
+                const response = await fetch('/matching/find-cofounders', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        idea_text: "Building an AI-powered health tracking app for fitness enthusiasts",
+                        top_k: 5
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                statusDiv.innerHTML = `
+                    <p><strong>✅ API Test Successful!</strong></p>
+                    <p>Found ${data.length} cofounders</p>
+                    <pre style="overflow-x: auto; background: #1a1a2e; padding: 10px; border-radius: 4px;">${JSON.stringify(data, null, 2)}</pre>
+                `;
+            } catch (error) {
+                statusDiv.innerHTML = `<p><strong>❌ Error:</strong> ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

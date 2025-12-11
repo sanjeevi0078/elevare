@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elevare - Technical Roadmap</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body class="overflow-x-hidden">
+    <!-- Floating particles -->
+    <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
+    <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
+    <div class="particle" style="left: 40%; animation-delay: 6s;"></div>
+    <div class="particle" style="left: 50%; animation-delay: 8s;"></div>
+    <div class="particle" style="left: 60%; animation-delay: 10s;"></div>
+    <div class="particle" style="left: 70%; animation-delay: 12s;"></div>
+    <div class="particle" style="left: 80%; animation-delay: 14s;"></div>
+    <div class="particle" style="left: 90%; animation-delay: 16s;"></div>
+    
+    <!-- Floating orbs -->
+    <div class="floating-orb orb-1"></div>
+    <div class="floating-orb orb-2"></div>
+    <div class="floating-orb orb-3"></div>
+
+    <header class="fixed w-full top-0 left-0 z-50 glass-morphism">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="/" class="text-3xl font-bold animated-gradient-text">Elevare</a>
+            <div class="flex items-center space-x-4">
+                 <a href="/intake" class="cta-button inline-block text-white font-bold py-2 px-4 rounded-lg">Get Started</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="pt-24">
+        <!-- Hero Section -->
+        <section class="relative py-32 px-4 hero-gradient-enhanced">
+            <div class="container mx-auto text-center">
+                <div class="mb-8">
+                    <span class="inline-block px-6 py-3 rounded-full text-sm font-semibold glass-morphism-enhanced text-purple-300 mb-6">
+                        <i class="fas fa-route mr-2"></i>Strategic Development Path
+                    </span>
+                </div>
+                <h1 class="text-6xl md:text-7xl font-bold mb-8 animated-gradient-text-hero leading-tight">
+                    Technical Roadmap
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed">
+                    Our strategic journey from concept to market leader, designed with precision and executed with excellence
+                </p>
+                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                    <a href="#roadmap" class="cta-button-enhanced cta-button-primary">
+                        <i class="fas fa-map-marked-alt mr-2"></i>Explore Journey
+                    </a>
+                    <a href="/intake" class="glass-morphism-enhanced cta-button-secondary text-white hover:text-purple-300">
+                        <i class="fas fa-rocket mr-2"></i>Start Building
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="py-20 px-4">
+            <div class="container mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+                    <div class="stat-card glass-morphism-enhanced text-center">
+                        <div class="text-4xl font-bold animated-gradient-text-enhanced mb-2">5</div>
+                        <div class="text-gray-300 font-semibold">Development Phases</div>
+                    </div>
+                    <div class="stat-card glass-morphism-enhanced text-center">
+                        <div class="text-4xl font-bold animated-gradient-text-enhanced mb-2" id="completion-percentage">20%</div>
+                        <div class="text-gray-300 font-semibold">Overall Progress</div>
+                    </div>
+                    <div class="stat-card glass-morphism-enhanced text-center">
+                        <div class="text-4xl font-bold animated-gradient-text-enhanced mb-2" id="active-users">1,247</div>
+                        <div class="text-gray-300 font-semibold">Active Users</div>
+                    </div>
+                    <div class="stat-card glass-morphism-enhanced text-center">
+                        <div class="text-4xl font-bold animated-gradient-text-enhanced mb-2">18</div>
+                        <div class="text-gray-300 font-semibold">Months Timeline</div>
+                    </div>
+                    <div class="stat-card glass-morphism-enhanced text-center">
+                        <div class="text-4xl font-bold animated-gradient-text-enhanced mb-2">∞</div>
+                        <div class="text-gray-300 font-semibold">Scalability</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Enhanced Timeline Section -->
+        <section id="roadmap" class="py-32 px-4">
+            <div class="container mx-auto">
+                <div class="text-center mb-20">
+                    <h2 class="text-5xl font-bold mb-6 animated-gradient-text-enhanced">Development Phases</h2>
+                    <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+                        Each milestone represents a strategic leap forward in our mission to democratize entrepreneurship
+                    </p>
+                    <!-- Progress Overview -->
+                    <div class="max-w-3xl mx-auto mb-12">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-sm font-semibold text-purple-300">Development Progress</span>
+                            <span class="text-sm font-semibold text-purple-300" id="progress-text">20% Complete</span>
+                        </div>
+                        <div class="w-full bg-gray-800 rounded-full h-4 overflow-hidden shadow-inner">
+                            <div class="bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 h-full rounded-full transition-all duration-1000 ease-out" id="progress-bar" style="width: 20%"></div>
+                        </div>
+                        <div class="flex justify-between mt-3 text-xs text-gray-400">
+                            <span>Foundations</span>
+                            <span>Development</span>
+                            <span>Validation</span>
+                            <span>Integration</span>
+                            <span>Evaluation</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <!-- Enhanced Timeline -->
+                    <div class="timeline max-w-4xl mx-auto">
+                        <!-- Phase 1: Foundations -->
+                        <div class="timeline-item group" data-phase="foundations">
+                            <div class="timeline-point relative">
+                                <div class="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 animate-pulse"></div>
+                                <div class="relative z-10 w-full h-full rounded-full bg-purple-600 flex items-center justify-center">
+                                    <i class="fas fa-foundation text-white text-xs"></i>
+                                </div>
+                            </div>
+                            <div class="timeline-content glass-morphism-enhanced group-hover:scale-105 transition-all duration-300">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h4 class="text-2xl font-bold text-white">Phase 1: Foundations</h4>
+                                    <div class="flex items-center gap-2">
+                                        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-green-500/20 text-green-300 border border-green-500/30">
+                                            ✅ COMPLETED
+                                        </span>
+                                        <span class="px-4 py-2 rounded-full text-sm font-semibold bg-gradient-to-r from-purple-500 to-pink-500 text-white">
+                                            Q1 2024
+                                        </span>
+                                    </div>
+                                </div>
+                                <h5 class="text-lg font-semibold text-purple-300 mb-3">Setup & Planning</h5>
+                                <p class="text-gray-300 mb-4 leading-relaxed">
+                                    Establish core architecture, development tools, data structures, and environment setup. Create the foundational framework for the entire platform.
+                                </p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="tag text-xs"><i class="fas fa-drafting-compass mr-1"></i>Architecture</span>
+                                    <span class="tag text-xs"><i class="fas fa-tools mr-1"></i>Development Tools</span>
+                                    <span class="tag text-xs"><i class="fas fa-database mr-1"></i>Data Structure</span>
+                                    <span class="tag text-xs"><i class="fas fa-server mr-1"></i>Environment</span>
+                                </div>
+                                <div class="flex items-center text-sm text-gray-400 mb-4">
+                                    <i class="fas fa-tasks mr-2"></i>
+                                    <span>Key Activities: Architecture design, tool selection, data modeling, environment configuration</span>
+                                </div>
+                                <button class="w-full py-2 px-4 rounded-lg bg-green-500/20 text-green-300 border border-green-500/30 cursor-not-allowed" disabled>
+                                    <i class="fas fa-check mr-2"></i>Already Completed
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Phase 2: Development -->
+                        <div class="timeline-item group" data-phase="development">
+                            <div class="timeline-point relative">
+                                <div class="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 animate-pulse"></div>
+                                <div class="relative z-10 w-full h-full rounded-full bg-blue-600 flex items-center justify-center">
+                                    <i class="fas fa-code text-white text-xs"></i>
+                                </div>
+                            </div>
+                            <div class="timeline-content glass-morphism-enhanced group-hover:scale-105 transition-all duration-300">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h4 class="text-2xl font-bold text-white">Phase 2: Development</h4>
+                                    <div class="flex items-center gap-2">
+                                        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-gray-500/20 text-gray-300 border border-gray-500/30">
+                                            📋 PLANNED
+                                        </span>
+                                        <span class="px-4 py-2 rounded-full text-sm font-semibold bg-gradient-to-r from-blue-500 to-cyan-500 text-white">
+                                            Q2-Q3 2024
+                                        </span>
+                                    </div>
+                                </div>
+                                <h5 class="text-lg font-semibold text-blue-300 mb-3">Building Core Features</h5>
+                                <p class="text-gray-300 mb-4 leading-relaxed">
+                                    Develop frontend interfaces, backend services, and AI model training. Build the core functionality that powers the platform.
+                                </p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="tag text-xs"><i class="fas fa-desktop mr-1"></i>Frontend</span>
+                                    <span class="tag text-xs"><i class="fas fa-server mr-1"></i>Backend</span>
+                                    <span class="tag text-xs"><i class="fas fa-brain mr-1"></i>AI Training</span>
+                                    <span class="tag text-xs"><i class="fas fa-api mr-1"></i>API Development</span>
+                                </div>
+                                <div class="flex items-center text-sm text-gray-400 mb-4">
+                                    <i class="fas fa-cogs mr-2"></i>
+                                    <span>Key Activities: UI/UX development, API creation, database implementation, ML model training</span>
+                                </div>
+                                <button onclick="markPhaseComplete('development')" class="w-full py-2 px-4 rounded-lg bg-blue-500/20 text-blue-300 border border-blue-500/30 hover:bg-blue-500/30 hover:text-white transition-all duration-300 group" id="btn-development">
+                                    <i class="fas fa-play mr-2 group-hover:scale-110 transition-transform"></i>Mark Complete
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Phase 3: Validation -->
+                        <div class="timeline-item group" data-phase="validation">
+                            <div class="timeline-point relative">
+                                <div class="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 animate-pulse"></div>
+                                <div class="relative z-10 w-full h-full rounded-full bg-emerald-600 flex items-center justify-center">
+                                    <i class="fas fa-check-circle text-white text-xs"></i>
+                                </div>
+                            </div>
+                            <div class="timeline-content glass-morphism-enhanced group-hover:scale-105 transition-all duration-300">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h4 class="text-2xl font-bold text-white">Phase 3: Validation</h4>
+                                    <div class="flex items-center gap-2">
+                                        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-gray-500/20 text-gray-300 border border-gray-500/30">
+                                            📋 PLANNED
+                                        </span>
+                                        <span class="px-4 py-2 rounded-full text-sm font-semibold bg-gradient-to-r from-emerald-500 to-teal-500 text-white">
+                                            Q4 2024
+                                        </span>
+                                    </div>
+                                </div>
+                                <h5 class="text-lg font-semibold text-emerald-300 mb-3">Testing & Quality Assurance</h5>
+                                <p class="text-gray-300 mb-4 leading-relaxed">
+                                    Comprehensive testing phase including quality assurance, user acceptance testing, and debugging to ensure platform reliability.
+                                </p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="tag text-xs"><i class="fas fa-vial mr-1"></i>QA Testing</span>
+                                    <span class="tag text-xs"><i class="fas fa-users mr-1"></i>UAT</span>
+                                    <span class="tag text-xs"><i class="fas fa-bug mr-1"></i>Debugging</span>
+                                    <span class="tag text-xs"><i class="fas fa-shield-alt mr-1"></i>Security Testing</span>
+                                </div>
+                                <div class="flex items-center text-sm text-gray-400 mb-4">
+                                    <i class="fas fa-clipboard-check mr-2"></i>
+                                    <span>Key Activities: Automated testing, user feedback collection, bug fixes, performance optimization</span>
+                                </div>
+                                <button onclick="markPhaseComplete('validation')" class="w-full py-2 px-4 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30 hover:text-white transition-all duration-300 group" id="btn-validation">
+                                    <i class="fas fa-play mr-2 group-hover:scale-110 transition-transform"></i>Mark Complete
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Phase 4: Integration & Deployment -->
+                        <div class="timeline-item group" data-phase="integration">
+                            <div class="timeline-point relative">
+                                <div class="absolute inset-0 rounded-full bg-gradient-to-r from-orange-500 to-red-500 animate-pulse"></div>
+                                <div class="relative z-10 w-full h-full rounded-full bg-orange-600 flex items-center justify-center">
+                                    <i class="fas fa-rocket text-white text-xs"></i>
+                                </div>
+                            </div>
+                            <div class="timeline-content glass-morphism-enhanced group-hover:scale-105 transition-all duration-300">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h4 class="text-2xl font-bold text-white">Phase 4: Integration & Deployment</h4>
+                                    <div class="flex items-center gap-2">
+                                        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-gray-500/20 text-gray-300 border border-gray-500/30">
+                                            📋 PLANNED
+                                        </span>
+                                        <span class="px-4 py-2 rounded-full text-sm font-semibold bg-gradient-to-r from-orange-500 to-red-500 text-white">
+                                            Q1 2025
+                                        </span>
+                                    </div>
+                                </div>
+                                <h5 class="text-lg font-semibold text-orange-300 mb-3">Launch Preparation</h5>
+                                <p class="text-gray-300 mb-4 leading-relaxed">
+                                    Final integration, CI/CD pipeline setup, server configuration, and official platform launch to the public.
+                                </p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="tag text-xs"><i class="fas fa-sync mr-1"></i>CI/CD</span>
+                                    <span class="tag text-xs"><i class="fas fa-server mr-1"></i>Server Setup</span>
+                                    <span class="tag text-xs"><i class="fas fa-globe mr-1"></i>Go-Live</span>
+                                    <span class="tag text-xs"><i class="fas fa-chart-line mr-1"></i>Monitoring</span>
+                                </div>
+                                <div class="flex items-center text-sm text-gray-400 mb-4">
+                                    <i class="fas fa-rocket mr-2"></i>
+                                    <span>Key Activities: Production deployment, monitoring setup, performance tuning, launch campaign</span>
+                                </div>
+                                <button onclick="markPhaseComplete('integration')" class="w-full py-2 px-4 rounded-lg bg-orange-500/20 text-orange-300 border border-orange-500/30 hover:bg-orange-500/30 hover:text-white transition-all duration-300 group" id="btn-integration">
+                                    <i class="fas fa-play mr-2 group-hover:scale-110 transition-transform"></i>Mark Complete
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Phase 5: Evaluation -->
+                        <div class="timeline-item group" data-phase="evaluation">
+                            <div class="timeline-point relative">
+                                <div class="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 animate-pulse"></div>
+                                <div class="relative z-10 w-full h-full rounded-full bg-indigo-600 flex items-center justify-center">
+                                    <i class="fas fa-chart-bar text-white text-xs"></i>
+                                </div>
+                            </div>
+                            <div class="timeline-content glass-morphism-enhanced group-hover:scale-105 transition-all duration-300">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h4 class="text-2xl font-bold text-white">Phase 5: Evaluation</h4>
+                                    <div class="flex items-center gap-2">
+                                        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-gray-500/20 text-gray-300 border border-gray-500/30">
+                                            📋 PLANNED
+                                        </span>
+                                        <span class="px-4 py-2 rounded-full text-sm font-semibold bg-gradient-to-r from-indigo-500 to-purple-500 text-white">
+                                            Q2+ 2025
+                                        </span>
+                                    </div>
+                                </div>
+                                <h5 class="text-lg font-semibold text-indigo-300 mb-3">Feedback & Continuous Improvement</h5>
+                                <p class="text-gray-300 mb-4 leading-relaxed">
+                                    Post-launch monitoring, user feedback analysis, feature updates, and ongoing platform maintenance and enhancement.
+                                </p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="tag text-xs"><i class="fas fa-chart-line mr-1"></i>Monitoring</span>
+                                    <span class="tag text-xs"><i class="fas fa-sync-alt mr-1"></i>Updates</span>
+                                    <span class="tag text-xs"><i class="fas fa-wrench mr-1"></i>Maintenance</span>
+                                    <span class="tag text-xs"><i class="fas fa-comments mr-1"></i>User Feedback</span>
+                                </div>
+                                <div class="flex items-center text-sm text-gray-400 mb-4">
+                                    <i class="fas fa-infinity mr-2"></i>
+                                    <span>Key Activities: Performance monitoring, feature enhancement, user support, continuous optimization</span>
+                                </div>
+                                <button onclick="markPhaseComplete('evaluation')" class="w-full py-2 px-4 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 hover:bg-indigo-500/30 hover:text-white transition-all duration-300 group" id="btn-evaluation">
+                                    <i class="fas fa-play mr-2 group-hover:scale-110 transition-transform"></i>Mark Complete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technology Stack Section -->
+        <section class="py-20 px-4 bg-gradient-to-r from-gray-900/50 to-gray-800/50">
+            <div class="container mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-6 animated-gradient-text-enhanced">Technology Excellence</h2>
+                    <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                        Built with cutting-edge technologies for maximum performance and scalability
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="feature-card-enhanced text-center">
+                        <div class="feature-icon-container mb-6">
+                            <div class="feature-icon">
+                                <i class="fab fa-react text-3xl"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4 text-white">Modern Frontend</h3>
+                        <p class="text-gray-300 leading-relaxed">
+                            React, TypeScript, and Tailwind CSS for responsive, accessible, and lightning-fast user experiences.
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card-enhanced text-center">
+                        <div class="feature-icon-container mb-6">
+                            <div class="feature-icon">
+                                <i class="fas fa-server text-3xl"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4 text-white">Scalable Backend</h3>
+                        <p class="text-gray-300 leading-relaxed">
+                            Node.js microservices architecture with PostgreSQL and Redis for enterprise-grade performance.
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card-enhanced text-center">
+                        <div class="feature-icon-container mb-6">
+                            <div class="feature-icon">
+                                <i class="fas fa-cloud text-3xl"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4 text-white">Cloud Infrastructure</h3>
+                        <p class="text-gray-300 leading-relaxed">
+                            AWS deployment with auto-scaling, monitoring, and 99.9% uptime guarantee for global accessibility.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="py-32 px-4 hero-gradient-enhanced">
+            <div class="container mx-auto text-center">
+                <h2 class="text-5xl font-bold mb-8 animated-gradient-text-hero">
+                    Ready to Build the Future?
+                </h2>
+                <p class="text-xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
+                    Join us on this incredible journey as we transform ideas into successful ventures. Your entrepreneurial story starts here.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                    <a href="/intake" class="cta-button-enhanced cta-button-primary">
+                        <i class="fas fa-rocket mr-2"></i>Start Your Journey
+                    </a>
+                    <a href="/" class="glass-morphism-enhanced cta-button-secondary text-white hover:text-purple-300">
+                        <i class="fas fa-home mr-2"></i>Back to Home
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900/80 backdrop-blur-lg py-16 px-4 border-t border-gray-800">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <div class="col-span-1 md:col-span-2">
+                    <h4 class="text-3xl font-bold animated-gradient-text-enhanced mb-4">Elevare</h4>
+                    <p class="text-gray-300 mb-6 leading-relaxed max-w-md">
+                        Democratizing entrepreneurship through intelligent idea-entrepreneur matching and comprehensive roadmap generation.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-12 h-12 rounded-full glass-morphism-enhanced flex items-center justify-center hover:scale-110 transition-all duration-300 group">
+                            <i class="fab fa-twitter text-blue-400 group-hover:text-white transition-colors"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 rounded-full glass-morphism-enhanced flex items-center justify-center hover:scale-110 transition-all duration-300 group">
+                            <i class="fab fa-linkedin text-blue-600 group-hover:text-white transition-colors"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 rounded-full glass-morphism-enhanced flex items-center justify-center hover:scale-110 transition-all duration-300 group">
+                            <i class="fab fa-github text-gray-400 group-hover:text-white transition-colors"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h5 class="text-lg font-semibold text-white mb-4">Platform</h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="/" class="hover:text-purple-400 transition-colors">Home</a></li>
+                        <li><a href="/intake" class="hover:text-purple-400 transition-colors">Get Started</a></li>
+                        <li><a href="/roadmap" class="hover:text-purple-400 transition-colors">Roadmap</a></li>
+                        <li><a href="/login" class="hover:text-purple-400 transition-colors">Login</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 class="text-lg font-semibold text-white mb-4">Company</h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-purple-400 transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-purple-400 transition-colors">Careers</a></li>
+                        <li><a href="#" class="hover:text-purple-400 transition-colors">Contact</a></li>
+                        <li><a href="#" class="hover:text-purple-400 transition-colors">Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2024 Elevare. All rights reserved. Democratizing entrepreneurship for everyone.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Progress tracking system
+        const progressData = {
+            foundations: { completed: true, progress: 100 },
+            development: { completed: false, progress: 0 },
+            validation: { completed: false, progress: 0 },
+            integration: { completed: false, progress: 0 },
+            evaluation: { completed: false, progress: 0 }
+        };
+
+        // Global function to update progress manually
+        window.updatePhaseProgress = function(phase, progress) {
+            if (progressData[phase]) {
+                progressData[phase].progress = Math.min(100, progress);
+                if (progressData[phase].progress >= 100) {
+                    progressData[phase].completed = true;
+                }
+                updateProgress();
+                console.log(`Updated ${phase} to ${progress}%`);
+            }
+        };
+
+        // Function to toggle phase completion
+        window.markPhaseComplete = function(phase) {
+            if (progressData[phase]) {
+                const button = document.getElementById(`btn-${phase}`);
+                const phaseElement = document.querySelector(`[data-phase="${phase}"]`);
+                const statusBadge = phaseElement ? phaseElement.querySelector('.px-3.py-1') : null;
+                
+                if (progressData[phase].completed) {
+                    // Mark as incomplete
+                    progressData[phase].progress = 0;
+                    progressData[phase].completed = false;
+                    
+                    // Reset button appearance
+                    if (button) {
+                        const phaseColors = {
+                            development: 'bg-blue-500/20 text-blue-300 border-blue-500/30 hover:bg-blue-500/30',
+                            validation: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/30',
+                            integration: 'bg-orange-500/20 text-orange-300 border-orange-500/30 hover:bg-orange-500/30',
+                            evaluation: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30 hover:bg-indigo-500/30'
+                        };
+                        button.innerHTML = '<i class="fas fa-play mr-2 group-hover:scale-110 transition-transform"></i>Mark Complete';
+                        button.className = `w-full py-2 px-4 rounded-lg ${phaseColors[phase]} hover:text-white transition-all duration-300 group`;
+                        button.disabled = false;
+                    }
+                    
+                    // Reset status badge
+                    if (statusBadge) {
+                        statusBadge.innerHTML = '📋 PLANNED';
+                        statusBadge.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-gray-500/20 text-gray-300 border border-gray-500/30';
+                    }
+                    
+                    showResetAnimation(phase);
+                } else {
+                    // Mark as complete
+                    progressData[phase].progress = 100;
+                    progressData[phase].completed = true;
+                    
+                    // Update button appearance
+                    if (button) {
+                        button.innerHTML = '<i class="fas fa-check mr-2"></i>Completed! (Click to undo)';
+                        button.className = 'w-full py-2 px-4 rounded-lg bg-green-500/20 text-green-300 border border-green-500/30 hover:bg-red-500/20 hover:text-red-300 transition-all duration-300';
+                        button.disabled = false;
+                    }
+                    
+                    // Update status badge
+                    if (statusBadge) {
+                        statusBadge.innerHTML = '✅ COMPLETED';
+                        statusBadge.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-green-500/20 text-green-300 border border-green-500/30';
+                    }
+                    
+                    showCompletionAnimation(phase);
+                }
+                
+                updateProgress();
+            }
+        };
+        
+        // Success animation
+        function showCompletionAnimation(phase) {
+            const message = document.createElement('div');
+            message.innerHTML = `<i class="fas fa-check-circle mr-2"></i>${phase.charAt(0).toUpperCase() + phase.slice(1)} Phase Completed!`;
+            message.className = 'fixed top-20 right-6 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300';
+            document.body.appendChild(message);
+            
+            setTimeout(() => message.style.transform = 'translateX(0)', 100);
+            setTimeout(() => {
+                message.style.transform = 'translateX(full)';
+                setTimeout(() => document.body.removeChild(message), 300);
+            }, 3000);
+        }
+        
+        // Reset animation
+        function showResetAnimation(phase) {
+            const message = document.createElement('div');
+            message.innerHTML = `<i class="fas fa-undo mr-2"></i>${phase.charAt(0).toUpperCase() + phase.slice(1)} Phase Reset!`;
+            message.className = 'fixed top-20 right-6 bg-orange-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300';
+            document.body.appendChild(message);
+            
+            setTimeout(() => message.style.transform = 'translateX(0)', 100);
+            setTimeout(() => {
+                message.style.transform = 'translateX(full)';
+                setTimeout(() => document.body.removeChild(message), 300);
+            }, 3000);
+        }
+
+        function updateProgress() {
+            const totalPhases = Object.keys(progressData).length;
+            let totalProgress = 0;
+            
+            Object.values(progressData).forEach(phase => {
+                totalProgress += phase.progress;
+            });
+            
+            const overallProgress = Math.round(totalProgress / totalPhases);
+            
+            // Update progress bar and text
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const completionPercentage = document.getElementById('completion-percentage');
+            
+            if (progressBar) progressBar.style.width = overallProgress + '%';
+            if (progressText) progressText.textContent = overallProgress + '% Complete';
+            if (completionPercentage) completionPercentage.textContent = overallProgress + '%';
+        }
+
+        // Manual progress update function (called when user completes tasks)
+        function updatePhaseProgress(phase, progress) {
+            if (progressData[phase]) {
+                progressData[phase].progress = Math.min(100, progress);
+                if (progressData[phase].progress >= 100) {
+                    progressData[phase].completed = true;
+                }
+                updateProgress();
+            }
+        }
+
+        // Example: Manual progress controls (for demonstration)
+        function addProgressControls() {
+            const phases = ['foundations', 'development', 'validation', 'integration', 'evaluation'];
+            
+            // Add hidden progress controls (can be triggered by admin or specific user actions)
+            phases.forEach(phase => {
+                // In real app, these would be triggered by actual user completions
+                // For now, they're available via browser console:
+                // updatePhaseProgress('development', 75) - to set development to 75%
+            });
+        }
+
+        // Add smooth scrolling and enhanced interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize progress
+            updateProgress();
+            addProgressControls();
+            
+            // Initialize button states
+            Object.keys(progressData).forEach(phase => {
+                if (progressData[phase].completed) {
+                    const button = document.getElementById(`btn-${phase}`);
+                    if (button) {
+                        button.innerHTML = '<i class="fas fa-check mr-2"></i>Completed! (Click to undo)';
+                        button.className = 'w-full py-2 px-4 rounded-lg bg-green-500/20 text-green-300 border border-green-500/30 hover:bg-red-500/20 hover:text-red-300 transition-all duration-300';
+                        button.disabled = false;
+                    }
+                }
+            });
+            
+            // Animate timeline items on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe timeline items
+            document.querySelectorAll('.timeline-item').forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(50px)';
+                item.style.transition = `opacity 0.6s ease ${index * 0.2}s, transform 0.6s ease ${index * 0.2}s`;
+                observer.observe(item);
+            });
+            
+            // Observe feature cards
+            document.querySelectorAll('.feature-card-enhanced').forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = `opacity 0.5s ease ${index * 0.1}s, transform 0.5s ease ${index * 0.1}s`;
+                observer.observe(card);
+            });
+            
+            // Observe stat cards
+            document.querySelectorAll('.stat-card').forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = `opacity 0.4s ease ${index * 0.1}s, transform 0.4s ease ${index * 0.1}s`;
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

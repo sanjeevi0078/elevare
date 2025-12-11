@@ -1,0 +1,7 @@
+# Go-to-Market Strategies
+
+## B2B SaaS
+Product-Led Growth: Freemium → Self-Service → Usage Pricing
+
+## B2C Mobile
+ASO + Viral + Paid (when CAC < 1/3 LTV)

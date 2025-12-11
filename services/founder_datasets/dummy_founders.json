@@ -1,0 +1,38 @@
+[
+    {
+        "id": "wellfound_1",
+        "name": "Danielle Lee",
+        "source": "wellfound",
+        "profile_url": "https://wellfound.com/p/danielle-lee",
+        "skills": ["product management", "go-to-market", "saas"],
+        "interests": ["edtech", "future of work"],
+        "bio": "Product leader with 10+ years of experience scaling B2B SaaS companies from seed to Series C. Passionate about education and building tools that empower creators.",
+        "location": "New York, USA",
+        "activity_score": 0.9,
+        "raw_data": {}
+    },
+    {
+        "id": "kaggle_2",
+        "name": "Kenji Tanaka",
+        "source": "kaggle",
+        "profile_url": "https://www.kaggle.com/kenjitanaka",
+        "skills": ["data science", "python", "pytorch", "computer vision"],
+        "interests": ["ai", "healthtech", "robotics"],
+        "bio": "Kaggle Grandmaster and AI researcher focused on applying deep learning to medical imaging. Previously at Google Brain. Looking for a mission-driven healthtech venture.",
+        "location": "Remote",
+        "activity_score": 0.95,
+        "raw_data": {}
+    },
+    {
+        "id": "openfounders_3",
+        "name": "Maria Garcia",
+        "source": "openfounders",
+        "profile_url": "https://openfounders.com/maria-garcia",
+        "skills": ["full-stack development", "javascript", "react native", "firebase"],
+        "interests": ["consumer social", "mobile", "e-commerce"],
+        "bio": "Serial entrepreneur and full-stack developer. Built and sold two mobile apps with over 1M downloads. Now seeking a co-founder for a new consumer social idea.",
+        "location": "London, UK",
+        "activity_score": 0.8,
+        "raw_data": {}
+    }
+]

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cofounder Page Test</title>
+    <style>
+        body {
+            background: #1a1a2e;
+            color: white;
+            font-family: Arial;
+            padding: 40px;
+        }
+        .test-section {
+            background: rgba(139, 92, 246, 0.1);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        button {
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        .result {
+            background: #000;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Cofounder Page Diagnostics</h1>
+    
+    <div class="test-section">
+        <h2>Test 1: Check Users API</h2>
+        <button onclick="testUsersAPI()">Load All Users</button>
+        <div id="users-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test 2: AI Matching API</h2>
+        <button onclick="testAIMatching()">Test AI Headhunter</button>
+        <div id="ai-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test 3: Navigate to Real Page</h2>
+        <button onclick="location.href='/cofounder'">Go to Cofounder Page (Clean)</button>
+        <button onclick="clearAndGo()">Clear Cache & Go</button>
+        <p style="color: #9ca3af; margin-top: 10px;">
+            "Clean" = Fresh page<br>
+            "Clear Cache" = Removes any stored matching data
+        </p>
+    </div>
+    
+    <div class="test-section">
+        <h2>Current State Check</h2>
+        <button onclick="checkState()">Check Browser State</button>
+        <div id="state-result" class="result"></div>
+    </div>
+
+    <script>
+        async function testUsersAPI() {
+            const resultEl = document.getElementById('users-result');
+            resultEl.innerHTML = 'Loading...';
+            
+            try {
+                const response = await fetch('/matching/users');
+                const users = await response.json();
+                resultEl.innerHTML = `
+✅ SUCCESS! Found ${users.length} users:
+${users.map(u => `• ${u.name} (${u.interest || 'No domain'})`).join('\n')}
+                `;
+            } catch (error) {
+                resultEl.innerHTML = `❌ ERROR: ${error.message}`;
+            }
+        }
+        
+        async function testAIMatching() {
+            const resultEl = document.getElementById('ai-result');
+            resultEl.innerHTML = 'Testing AI Headhunter...';
+            
+            try {
+                const testIdea = "I'm looking for cofounders for a tech startup. I bring expertise in Python, JavaScript. Looking for complementary skills.";
+                
+                const response = await fetch('/matching/find-cofounders', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ idea: testIdea, top_k: 5 })
+                });
+                
+                const matches = await response.json();
+                resultEl.innerHTML = `
+✅ AI MATCHING WORKS! Found ${matches.length} matches:
+${matches.map(m => `
+• ${m.name} (${m.match_percentage}% match)
+  Role: ${m.role_type}
+  Source: ${m.source}
+  ${m.profile_url ? 'GitHub: ' + m.profile_url : 'Local user'}
+`).join('\n')}
+                `;
+            } catch (error) {
+                resultEl.innerHTML = `❌ ERROR: ${error.message}`;
+            }
+        }
+        
+        function clearAndGo() {
+            sessionStorage.clear();
+            localStorage.removeItem('currentMatches');
+            location.href = '/cofounder';
+        }
+        
+        function checkState() {
+            const resultEl = document.getElementById('state-result');
+            const sessionData = {
+                matchingIdea: sessionStorage.getItem('matchingIdea'),
+                matchingIdeaTitle: sessionStorage.getItem('matchingIdeaTitle'),
+                currentMatches: localStorage.getItem('currentMatches'),
+                token: localStorage.getItem('access_token') ? 'Present' : 'Missing'
+            };
+            
+            resultEl.innerHTML = `
+Browser State:
+• matchingIdea: ${sessionData.matchingIdea || 'None'}
+• matchingIdeaTitle: ${sessionData.matchingIdeaTitle || 'None'}
+• currentMatches: ${sessionData.currentMatches ? 'Stored' : 'None'}
+• Auth Token: ${sessionData.token}
+
+URL params: ${window.location.search || 'None'}
+            `;
+        }
+    </script>
+</body>
+</html>

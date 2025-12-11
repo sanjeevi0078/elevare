@@ -1,0 +1,1 @@
+# FastAPI Elevare Application

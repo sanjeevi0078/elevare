@@ -1,0 +1,11 @@
+# Finding Product-Market Fit: A Case Study
+
+## Overview
+Product-market fit (PMF) is the critical milestone where a startup's product satisfies a strong market demand.
+
+## Case Study: Airbnb
+Airbnb struggled for years before finding PMF. Key insights:
+1. Talk to Users: The founders physically visited hosts
+2. Iterate Rapidly: They redesigned 7 times
+3. Focus on Love: 100 users who loved vs 1000 who liked
+4. Measure Retention: PMF confirmed at 40% weekly return rate
