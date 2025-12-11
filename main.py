@@ -35,6 +35,7 @@ from api.mentor import router as mentor_router
 from api.roadmap import router as roadmap_router
 from api.auth import router as auth_router
 from api.events import router as events_router
+from api.admin import router as admin_router
 
 
 # ==========================================
@@ -154,6 +155,7 @@ def create_application() -> FastAPI:
     app.include_router(agent_router, prefix="/api/v1", tags=["AI Agent"])
     app.include_router(collaboration_router, prefix="/api/v1", tags=["Collaboration"])
     app.include_router(mentor_router, prefix="/api/v1", tags=["AI Mentor"])
+    app.include_router(admin_router, prefix="/api/v1", tags=["Admin - Knowledge Base"])
     
     # Mount static files
     static_dir = Path(__file__).parent / "static"

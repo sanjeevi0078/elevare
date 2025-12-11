@@ -35,6 +35,7 @@ sse-starlette>=1.6.0
 langchain-text-splitters>=0.0.1
 langchain-community>=0.0.20
 chromadb>=0.4.0
+pypdf>=4.0.0  # PDF text extraction for knowledge ingestion
 
 # ==========================================
 # DATABASE & CACHING

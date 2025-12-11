@@ -1,30 +1,54 @@
 """
-Startup Knowledge Base - RAG Service
+Startup Knowledge Base - Dynamic Ingestion Engine
 Manages the vector store for startup case studies, best practices, and domain knowledge.
 
 This service provides:
-1. Document ingestion from startup_docs/ directory
+1. Dynamic document ingestion (PDF, TXT, MD) via file upload
 2. Vector embeddings using HuggingFace (free and local)
 3. Persistent storage with ChromaDB
 4. RAG retriever for agent queries
+5. Admin API for knowledge management
+
+Architecture:
+- Input: Admin uploads a file (PDF, TXT, MD)
+- Extraction: Strip raw text from binary format
+- Chunking: RecursiveCharacterTextSplitter (1000 chars, 200 overlap)
+- Embedding: all-MiniLM-L6-v2 (384 dimensions)
+- Storage: ChromaDB (persistent, local)
 """
 
+import io
 import os
+import hashlib
+import logging
+from datetime import datetime
 from pathlib import Path
-from typing import List
+from typing import List, Optional, Dict, Any, Union
 
+from fastapi import UploadFile
 from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import DirectoryLoader, TextLoader
 from langchain_core.documents import Document
+from pydantic import BaseModel, Field
+
+# PDF parsing
+try:
+    from pypdf import PdfReader
+    PDF_SUPPORT = True
+except ImportError:
+    PDF_SUPPORT = False
+    print("⚠️ pypdf not installed. PDF support disabled.")
+
+logger = logging.getLogger(__name__)
 
 
 # ============================================================================
 # CONFIGURATION
 # ============================================================================
 
-CHROMA_DB_PATH = "./chroma_db"
+CHROMA_DB_PATH = "./db/chroma_storage"  # Persistent storage path
 DOCS_PATH = "./startup_docs"
 
 # Embedding model configuration (using HuggingFace - free and local)
@@ -37,9 +61,462 @@ CHUNK_OVERLAP = 200
 # Retrieval configuration
 DEFAULT_K = 3  # Number of documents to retrieve
 
+# Supported file types
+SUPPORTED_EXTENSIONS = {'.pdf', '.txt', '.md', '.markdown'}
+
 
 # ============================================================================
-# VECTOR STORE MANAGEMENT
+# RESPONSE MODELS
+# ============================================================================
+
+class IngestionResult(BaseModel):
+    """Result of a document ingestion operation."""
+    success: bool
+    filename: str
+    file_type: str
+    chunks_created: int
+    document_id: str
+    message: str
+    metadata: Dict[str, Any] = Field(default_factory=dict)
+
+
+class QueryResult(BaseModel):
+    """Result of a knowledge base query."""
+    query: str
+    results: List[Dict[str, Any]]
+    total_results: int
+
+
+# ============================================================================
+# KNOWLEDGE BASE SERVICE (Enterprise Ingestion Engine)
+# ============================================================================
+
+class KnowledgeBaseService:
+    """
+    Dynamic Knowledge Ingestion Engine for Elevare.
+    
+    Handles file uploads, chunking, embedding, and vector storage.
+    Supports PDF, TXT, and Markdown files.
+    
+    Usage:
+        service = KnowledgeBaseService()
+        result = await service.ingest_document(uploaded_file)
+        query_result = service.query_knowledge("How to raise funds?")
+    """
+    
+    _instance: Optional['KnowledgeBaseService'] = None
+    _embeddings = None
+    _vector_store = None
+    
+    def __new__(cls) -> 'KnowledgeBaseService':
+        """Singleton pattern to reuse embeddings and vector store."""
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance._initialized = False
+        return cls._instance
+    
+    def __init__(self):
+        """Initialize the knowledge base service."""
+        if self._initialized:
+            return
+            
+        logger.info("🔧 Initializing KnowledgeBaseService...")
+        
+        # Ensure storage directory exists
+        Path(CHROMA_DB_PATH).mkdir(parents=True, exist_ok=True)
+        
+        # Initialize embeddings (singleton)
+        if KnowledgeBaseService._embeddings is None:
+            logger.info(f"📦 Loading embedding model: {EMBEDDING_MODEL}")
+            KnowledgeBaseService._embeddings = HuggingFaceEmbeddings(
+                model_name=EMBEDDING_MODEL,
+                model_kwargs={'device': 'cpu'},
+                encode_kwargs={'normalize_embeddings': True}
+            )
+            logger.info("✅ Embedding model loaded")
+        
+        # Initialize text splitter
+        self._text_splitter = RecursiveCharacterTextSplitter(
+            chunk_size=CHUNK_SIZE,
+            chunk_overlap=CHUNK_OVERLAP,
+            length_function=len,
+            is_separator_regex=False,
+            separators=["\n\n", "\n", ". ", " ", ""]
+        )
+        
+        # Initialize vector store
+        if KnowledgeBaseService._vector_store is None:
+            KnowledgeBaseService._vector_store = Chroma(
+                persist_directory=CHROMA_DB_PATH,
+                embedding_function=KnowledgeBaseService._embeddings,
+                collection_name="elevare_knowledge"
+            )
+            logger.info(f"✅ ChromaDB initialized at {CHROMA_DB_PATH}")
+        
+        self._initialized = True
+        logger.info("✅ KnowledgeBaseService ready")
+    
+    @property
+    def embeddings(self):
+        return KnowledgeBaseService._embeddings
+    
+    @property
+    def vector_store(self) -> Chroma:
+        return KnowledgeBaseService._vector_store
+    
+    # -------------------------------------------------------------------------
+    # TEXT EXTRACTION
+    # -------------------------------------------------------------------------
+    
+    def _extract_text_from_pdf(self, file_content: bytes) -> str:
+        """Extract text from PDF file content."""
+        if not PDF_SUPPORT:
+            raise ValueError("PDF support not available. Install pypdf: pip install pypdf")
+        
+        try:
+            pdf_reader = PdfReader(io.BytesIO(file_content))
+            text_parts = []
+            
+            for page_num, page in enumerate(pdf_reader.pages):
+                page_text = page.extract_text()
+                if page_text:
+                    text_parts.append(f"[Page {page_num + 1}]\n{page_text}")
+            
+            full_text = "\n\n".join(text_parts)
+            logger.info(f"📄 Extracted {len(full_text)} characters from PDF ({len(pdf_reader.pages)} pages)")
+            return full_text
+            
+        except Exception as e:
+            logger.error(f"Failed to extract PDF text: {e}")
+            raise ValueError(f"Failed to parse PDF: {str(e)}")
+    
+    def _extract_text_from_txt(self, file_content: bytes) -> str:
+        """Extract text from TXT/MD file content."""
+        try:
+            # Try UTF-8 first, then fall back to other encodings
+            for encoding in ['utf-8', 'latin-1', 'cp1252']:
+                try:
+                    return file_content.decode(encoding)
+                except UnicodeDecodeError:
+                    continue
+            
+            # Last resort: decode with errors='replace'
+            return file_content.decode('utf-8', errors='replace')
+            
+        except Exception as e:
+            logger.error(f"Failed to extract text: {e}")
+            raise ValueError(f"Failed to parse text file: {str(e)}")
+    
+    def _detect_file_type(self, filename: str) -> str:
+        """Detect file type from filename extension."""
+        ext = Path(filename).suffix.lower()
+        
+        if ext == '.pdf':
+            return 'pdf'
+        elif ext in {'.txt', '.md', '.markdown'}:
+            return 'text'
+        else:
+            raise ValueError(f"Unsupported file type: {ext}. Supported: {SUPPORTED_EXTENSIONS}")
+    
+    # -------------------------------------------------------------------------
+    # DOCUMENT INGESTION
+    # -------------------------------------------------------------------------
+    
+    async def ingest_document(self, file: UploadFile) -> IngestionResult:
+        """
+        Ingest a document into the knowledge base.
+        
+        Process:
+        1. Detect file type (PDF, TXT, MD)
+        2. Extract raw text
+        3. Split into chunks with RecursiveCharacterTextSplitter
+        4. Generate embeddings
+        5. Store in ChromaDB with metadata
+        
+        Args:
+            file: FastAPI UploadFile object
+            
+        Returns:
+            IngestionResult with success status and details
+        """
+        filename = file.filename or "unknown"
+        
+        try:
+            # Detect file type
+            file_type = self._detect_file_type(filename)
+            logger.info(f"📥 Ingesting {filename} (type: {file_type})")
+            
+            # Read file content
+            content = await file.read()
+            
+            if len(content) == 0:
+                return IngestionResult(
+                    success=False,
+                    filename=filename,
+                    file_type=file_type,
+                    chunks_created=0,
+                    document_id="",
+                    message="File is empty"
+                )
+            
+            # Extract text based on file type
+            if file_type == 'pdf':
+                text = self._extract_text_from_pdf(content)
+            else:
+                text = self._extract_text_from_txt(content)
+            
+            if not text.strip():
+                return IngestionResult(
+                    success=False,
+                    filename=filename,
+                    file_type=file_type,
+                    chunks_created=0,
+                    document_id="",
+                    message="No text content could be extracted"
+                )
+            
+            # Generate document ID (hash of content for deduplication)
+            doc_id = hashlib.md5(content).hexdigest()[:12]
+            
+            # Create chunks
+            chunks = self._text_splitter.split_text(text)
+            logger.info(f"✂️ Created {len(chunks)} chunks from {filename}")
+            
+            # Create Document objects with metadata
+            documents = []
+            for i, chunk in enumerate(chunks):
+                doc = Document(
+                    page_content=chunk,
+                    metadata={
+                        "source": filename,
+                        "document_id": doc_id,
+                        "chunk_index": i,
+                        "total_chunks": len(chunks),
+                        "file_type": file_type,
+                        "ingested_at": datetime.utcnow().isoformat(),
+                        "char_count": len(chunk)
+                    }
+                )
+                documents.append(doc)
+            
+            # Add to vector store
+            self.vector_store.add_documents(documents)
+            logger.info(f"✅ Added {len(documents)} chunks to vector store")
+            
+            return IngestionResult(
+                success=True,
+                filename=filename,
+                file_type=file_type,
+                chunks_created=len(chunks),
+                document_id=doc_id,
+                message=f"Successfully ingested {filename}",
+                metadata={
+                    "total_characters": len(text),
+                    "avg_chunk_size": len(text) // len(chunks) if chunks else 0
+                }
+            )
+            
+        except ValueError as e:
+            logger.error(f"Validation error: {e}")
+            return IngestionResult(
+                success=False,
+                filename=filename,
+                file_type="unknown",
+                chunks_created=0,
+                document_id="",
+                message=str(e)
+            )
+        except Exception as e:
+            logger.exception(f"Ingestion failed for {filename}")
+            return IngestionResult(
+                success=False,
+                filename=filename,
+                file_type="unknown",
+                chunks_created=0,
+                document_id="",
+                message=f"Ingestion failed: {str(e)}"
+            )
+    
+    def ingest_text(self, text: str, source_name: str = "manual_input") -> IngestionResult:
+        """
+        Ingest raw text directly into the knowledge base.
+        
+        Args:
+            text: Raw text content to ingest
+            source_name: Name to use as the source
+            
+        Returns:
+            IngestionResult with success status
+        """
+        try:
+            if not text.strip():
+                return IngestionResult(
+                    success=False,
+                    filename=source_name,
+                    file_type="text",
+                    chunks_created=0,
+                    document_id="",
+                    message="Text is empty"
+                )
+            
+            doc_id = hashlib.md5(text.encode()).hexdigest()[:12]
+            chunks = self._text_splitter.split_text(text)
+            
+            documents = []
+            for i, chunk in enumerate(chunks):
+                doc = Document(
+                    page_content=chunk,
+                    metadata={
+                        "source": source_name,
+                        "document_id": doc_id,
+                        "chunk_index": i,
+                        "total_chunks": len(chunks),
+                        "file_type": "text",
+                        "ingested_at": datetime.utcnow().isoformat()
+                    }
+                )
+                documents.append(doc)
+            
+            self.vector_store.add_documents(documents)
+            
+            return IngestionResult(
+                success=True,
+                filename=source_name,
+                file_type="text",
+                chunks_created=len(chunks),
+                document_id=doc_id,
+                message=f"Successfully ingested {len(chunks)} chunks"
+            )
+            
+        except Exception as e:
+            logger.exception(f"Text ingestion failed")
+            return IngestionResult(
+                success=False,
+                filename=source_name,
+                file_type="text",
+                chunks_created=0,
+                document_id="",
+                message=str(e)
+            )
+    
+    # -------------------------------------------------------------------------
+    # QUERYING
+    # -------------------------------------------------------------------------
+    
+    def query_knowledge(
+        self,
+        query_text: str,
+        n_results: int = 3,
+        filter_metadata: Optional[Dict[str, Any]] = None
+    ) -> QueryResult:
+        """
+        Query the knowledge base for relevant information.
+        
+        Args:
+            query_text: The question or search query
+            n_results: Number of results to return (default: 3)
+            filter_metadata: Optional metadata filters
+            
+        Returns:
+            QueryResult with relevant document chunks
+        """
+        try:
+            # Perform similarity search
+            if filter_metadata:
+                docs = self.vector_store.similarity_search(
+                    query_text,
+                    k=n_results,
+                    filter=filter_metadata
+                )
+            else:
+                docs = self.vector_store.similarity_search(
+                    query_text,
+                    k=n_results
+                )
+            
+            # Format results
+            results = []
+            for doc in docs:
+                results.append({
+                    "content": doc.page_content,
+                    "source": doc.metadata.get("source", "Unknown"),
+                    "document_id": doc.metadata.get("document_id", ""),
+                    "chunk_index": doc.metadata.get("chunk_index", 0),
+                    "metadata": doc.metadata
+                })
+            
+            return QueryResult(
+                query=query_text,
+                results=results,
+                total_results=len(results)
+            )
+            
+        except Exception as e:
+            logger.exception(f"Query failed: {query_text}")
+            return QueryResult(
+                query=query_text,
+                results=[],
+                total_results=0
+            )
+    
+    def get_retriever(self, k: int = DEFAULT_K):
+        """Get a LangChain retriever for RAG chains."""
+        return self.vector_store.as_retriever(
+            search_type="similarity",
+            search_kwargs={"k": k}
+        )
+    
+    # -------------------------------------------------------------------------
+    # MANAGEMENT
+    # -------------------------------------------------------------------------
+    
+    def get_stats(self) -> Dict[str, Any]:
+        """Get statistics about the knowledge base."""
+        try:
+            collection = self.vector_store._collection
+            count = collection.count()
+            
+            return {
+                "total_chunks": count,
+                "storage_path": CHROMA_DB_PATH,
+                "embedding_model": EMBEDDING_MODEL,
+                "chunk_size": CHUNK_SIZE,
+                "chunk_overlap": CHUNK_OVERLAP
+            }
+        except Exception as e:
+            return {"error": str(e)}
+    
+    def delete_document(self, document_id: str) -> bool:
+        """Delete all chunks associated with a document ID."""
+        try:
+            self.vector_store._collection.delete(
+                where={"document_id": document_id}
+            )
+            logger.info(f"🗑️ Deleted document: {document_id}")
+            return True
+        except Exception as e:
+            logger.error(f"Failed to delete document {document_id}: {e}")
+            return False
+    
+    def clear_all(self) -> bool:
+        """Clear all documents from the knowledge base."""
+        try:
+            # Delete and recreate collection
+            self.vector_store._client.delete_collection("elevare_knowledge")
+            KnowledgeBaseService._vector_store = Chroma(
+                persist_directory=CHROMA_DB_PATH,
+                embedding_function=KnowledgeBaseService._embeddings,
+                collection_name="elevare_knowledge"
+            )
+            logger.info("🗑️ Cleared all documents from knowledge base")
+            return True
+        except Exception as e:
+            logger.error(f"Failed to clear knowledge base: {e}")
+            return False
+
+
+# ============================================================================
+# LEGACY COMPATIBILITY - VECTOR STORE MANAGEMENT
 # ============================================================================
 
 def get_embeddings():
