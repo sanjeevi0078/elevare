@@ -1,30 +1,57 @@
-# Use an official Python runtime as a parent image
-FROM python:3.13-slim
+# =============================================================================
+# Elevare Backend - Production Dockerfile
+# Multi-stage build for optimized image size
+# =============================================================================
 
-# Set the working directory in the container
+# Stage 1: Builder
+FROM python:3.11-slim as builder
+
 WORKDIR /app
 
-# Install system dependencies
+# Install build dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
+    libpq-dev \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy the requirements file into the container at /app
+# Install Python dependencies
 COPY requirements.txt .
+RUN pip install --no-cache-dir --user -r requirements.txt
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# Stage 2: Production
+FROM python:3.11-slim
 
-# Copy the current directory contents into the container at /app
+WORKDIR /app
+
+# Install runtime dependencies (PostgreSQL client libs)
+RUN apt-get update && apt-get install -y \
+    libpq5 \
+    curl \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
+
+# Copy Python packages from builder
+COPY --from=builder /root/.local /root/.local
+ENV PATH=/root/.local/bin:$PATH
+
+# Copy application code
 COPY . .
 
-# Expose port 8000
+# Create non-root user for security
+RUN useradd --create-home appuser && chown -R appuser:appuser /app
+USER appuser
+
+# Expose port
 EXPOSE 8000
 
-# Define environment variable
-ENV MODULE_NAME=main
-ENV VARIABLE_NAME=app
-ENV PORT=8000
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8000/health || exit 1
+
+# Environment variables
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
 
 # Run the application
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -45,6 +45,11 @@ alembic>=1.13.0  # Database migrations
 redis>=5.0.0
 hiredis>=2.3.0  # Faster Redis protocol parsing
 
+# PostgreSQL Support (Production)
+asyncpg>=0.29.0  # Async PostgreSQL driver
+psycopg2-binary>=2.9.9  # Sync PostgreSQL driver (for Alembic)
+aiosqlite>=0.19.0  # Async SQLite driver (fallback for local dev)
+
 # ==========================================
 # SECURITY & AUTHENTICATION
 # ==========================================
